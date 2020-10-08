@@ -7,10 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CC13C57F9BD3F91E44CBA935 /* TLActionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC13CB151621ECB3E2D40D5C /* TLActionController.swift */; };
 		CD5D4DA3252F0EAE00F109C6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD5D4DA2252F0EAE00F109C6 /* AppDelegate.swift */; };
-		CD5D4DA5252F0EAE00F109C6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD5D4DA4252F0EAE00F109C6 /* SceneDelegate.swift */; };
 		CD5D4DA7252F0EAE00F109C6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD5D4DA6252F0EAE00F109C6 /* ViewController.swift */; };
-		CD5D4DAA252F0EAE00F109C6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CD5D4DA8252F0EAE00F109C6 /* Main.storyboard */; };
 		CD5D4DAC252F0EAE00F109C6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CD5D4DAB252F0EAE00F109C6 /* Assets.xcassets */; };
 		CD5D4DAF252F0EAE00F109C6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CD5D4DAD252F0EAE00F109C6 /* LaunchScreen.storyboard */; };
 		CD5D4DBA252F0EAF00F109C6 /* TLActionSheetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD5D4DB9252F0EAF00F109C6 /* TLActionSheetTests.swift */; };
@@ -35,11 +34,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		CC13CB151621ECB3E2D40D5C /* TLActionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TLActionController.swift; sourceTree = "<group>"; };
 		CD5D4D9F252F0EAE00F109C6 /* TLActionSheet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TLActionSheet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD5D4DA2252F0EAE00F109C6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		CD5D4DA4252F0EAE00F109C6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		CD5D4DA6252F0EAE00F109C6 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		CD5D4DA9252F0EAE00F109C6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		CD5D4DAB252F0EAE00F109C6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CD5D4DAE252F0EAE00F109C6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CD5D4DB0252F0EAE00F109C6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -100,12 +98,11 @@
 			isa = PBXGroup;
 			children = (
 				CD5D4DA2252F0EAE00F109C6 /* AppDelegate.swift */,
-				CD5D4DA4252F0EAE00F109C6 /* SceneDelegate.swift */,
 				CD5D4DA6252F0EAE00F109C6 /* ViewController.swift */,
-				CD5D4DA8252F0EAE00F109C6 /* Main.storyboard */,
 				CD5D4DAB252F0EAE00F109C6 /* Assets.xcassets */,
 				CD5D4DAD252F0EAE00F109C6 /* LaunchScreen.storyboard */,
 				CD5D4DB0252F0EAE00F109C6 /* Info.plist */,
+				CC13CB151621ECB3E2D40D5C /* TLActionController.swift */,
 			);
 			path = TLActionSheet;
 			sourceTree = "<group>";
@@ -233,7 +230,6 @@
 			files = (
 				CD5D4DAF252F0EAE00F109C6 /* LaunchScreen.storyboard in Resources */,
 				CD5D4DAC252F0EAE00F109C6 /* Assets.xcassets in Resources */,
-				CD5D4DAA252F0EAE00F109C6 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -260,7 +256,7 @@
 			files = (
 				CD5D4DA7252F0EAE00F109C6 /* ViewController.swift in Sources */,
 				CD5D4DA3252F0EAE00F109C6 /* AppDelegate.swift in Sources */,
-				CD5D4DA5252F0EAE00F109C6 /* SceneDelegate.swift in Sources */,
+				CC13C57F9BD3F91E44CBA935 /* TLActionController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -296,14 +292,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		CD5D4DA8252F0EAE00F109C6 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				CD5D4DA9252F0EAE00F109C6 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		CD5D4DAD252F0EAE00F109C6 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -348,6 +336,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -366,7 +355,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -409,6 +398,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -421,7 +411,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -436,6 +426,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = WVW2QXS9H2;
 				INFOPLIST_FILE = TLActionSheet/Info.plist;
@@ -445,6 +437,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = io.gitlab.terrylewis.TLActionSheet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -455,6 +448,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = WVW2QXS9H2;
 				INFOPLIST_FILE = TLActionSheet/Info.plist;
@@ -464,6 +459,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = io.gitlab.terrylewis.TLActionSheet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
