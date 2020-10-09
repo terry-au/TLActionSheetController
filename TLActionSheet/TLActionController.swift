@@ -105,4 +105,13 @@ class TLActionController: UIViewController, UIViewControllerTransitioningDelegat
       actions.append(action)
     }
   }
+
+  internal func invokeCancelAction() {
+    guard let cancelAction = self.cancelAction else {
+      return
+    }
+
+    cancelAction.handler?(cancelAction)
+    self.dismiss(animated: true)
+  }
 }

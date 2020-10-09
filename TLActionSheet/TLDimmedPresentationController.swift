@@ -41,7 +41,11 @@ private class TLDimmedPresentationController: UIPresentationController, UIViewCo
   }
 
   @objc func onTapDimView(sender: Any?) {
-    self.presentedViewController.dismiss(animated: true)
+    guard let actionController = presentedViewController as? TLActionController else {
+      return
+    }
+
+    actionController.invokeCancelAction()
   }
 }
 

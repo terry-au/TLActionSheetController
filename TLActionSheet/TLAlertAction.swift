@@ -20,9 +20,9 @@ public class TLAlertAction {
 
   var style: Style
 
-  private var handler: ((UIAlertAction) -> Void)?
+  internal var handler: ((TLAlertAction) -> Void)?
 
-  init(title: String?, style: TLAlertAction.Style, handler: ((UIAlertAction) -> Void)? = nil) {
+  init(title: String?, style: TLAlertAction.Style, handler: ((TLAlertAction) -> Void)? = nil) {
     self.title = title
     self.handler = handler
     self.style = style
