@@ -7,7 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CC13C2BA656B47822CBBFB90 /* TLDimmedPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC13CBB092220B4940F2481C /* TLDimmedPresentationController.swift */; };
 		CC13C57F9BD3F91E44CBA935 /* TLActionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC13CB151621ECB3E2D40D5C /* TLActionController.swift */; };
+		CC13CD0ADED7DD3CC87401BA /* TLAlertAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC13C3C8BEB376B6AED6B7FA /* TLAlertAction.swift */; };
 		CD5D4DA3252F0EAE00F109C6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD5D4DA2252F0EAE00F109C6 /* AppDelegate.swift */; };
 		CD5D4DA7252F0EAE00F109C6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD5D4DA6252F0EAE00F109C6 /* ViewController.swift */; };
 		CD5D4DAC252F0EAE00F109C6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CD5D4DAB252F0EAE00F109C6 /* Assets.xcassets */; };
@@ -34,7 +36,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		CC13C3C8BEB376B6AED6B7FA /* TLAlertAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TLAlertAction.swift; sourceTree = "<group>"; };
 		CC13CB151621ECB3E2D40D5C /* TLActionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TLActionController.swift; sourceTree = "<group>"; };
+		CC13CBB092220B4940F2481C /* TLDimmedPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TLDimmedPresentationController.swift; sourceTree = "<group>"; };
 		CD5D4D9F252F0EAE00F109C6 /* TLActionSheet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TLActionSheet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD5D4DA2252F0EAE00F109C6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CD5D4DA6252F0EAE00F109C6 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -103,6 +107,8 @@
 				CD5D4DAD252F0EAE00F109C6 /* LaunchScreen.storyboard */,
 				CD5D4DB0252F0EAE00F109C6 /* Info.plist */,
 				CC13CB151621ECB3E2D40D5C /* TLActionController.swift */,
+				CC13C3C8BEB376B6AED6B7FA /* TLAlertAction.swift */,
+				CC13CBB092220B4940F2481C /* TLDimmedPresentationController.swift */,
 			);
 			path = TLActionSheet;
 			sourceTree = "<group>";
@@ -257,6 +263,8 @@
 				CD5D4DA7252F0EAE00F109C6 /* ViewController.swift in Sources */,
 				CD5D4DA3252F0EAE00F109C6 /* AppDelegate.swift in Sources */,
 				CC13C57F9BD3F91E44CBA935 /* TLActionController.swift in Sources */,
+				CC13CD0ADED7DD3CC87401BA /* TLAlertAction.swift in Sources */,
+				CC13C2BA656B47822CBBFB90 /* TLDimmedPresentationController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
