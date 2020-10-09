@@ -15,7 +15,7 @@ class ViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    classicButton.setTitle("Open UIAlertController", for: .normal)
+    classicButton.setTitle("Present UIAlertController", for: .normal)
     classicButton.addTarget(self, action: #selector(openClassic(sender:)), for: .touchUpInside)
     view.addSubview(classicButton)
 
@@ -23,7 +23,7 @@ class ViewController: UIViewController {
     classicButton.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
     classicButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
 
-    newButton.setTitle("New UIAlertController", for: .normal)
+    newButton.setTitle("Present TLAlertController", for: .normal)
     newButton.addTarget(self, action: #selector(openNew(sender:)), for: .touchUpInside)
     view.addSubview(newButton)
 

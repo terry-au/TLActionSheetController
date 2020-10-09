@@ -5,31 +5,6 @@
 import Foundation
 import UIKit
 
-public class TLAlertAction {
-  public enum Style: Int {
-    case `default` = 0
-
-    case cancel = 1
-
-    case destructive = 2
-  }
-
-  open var title: String?
-
-  open var isEnabled: Bool
-
-  fileprivate var style: Style
-
-  private var handler: ((UIAlertAction) -> Void)?
-
-  init(title: String?, style: TLAlertAction.Style, handler: ((UIAlertAction) -> Void)? = nil) {
-    self.title = title
-    self.handler = handler
-    self.style = style
-    isEnabled = true
-  }
-}
-
 private class TLActionView: UIView {
   private let label = UILabel()
 
@@ -52,59 +27,62 @@ private class TLActionView: UIView {
   }
 }
 
-class TLActionController: UIViewController {
+class TLActionController: UIViewController, UIViewControllerTransitioningDelegate {
 
   /* corner radius = 13 */
   /* item height 57 */
   /* 8 padding on sides */
-  private let stackView = UIStackView()
+
+  let stackViewContainer = UIView()
+
+  let stackView = UIStackView()
 
   private var actions: [TLAlertAction] = []
 
   private var cancelAction: TLAlertAction?
 
+  private var detailsTransitioningDelegate = TLDimmedModalTransitioningDelegate()
+
   init() {
     super.init(nibName: nil, bundle: nil)
 
-    self.modalPresentationStyle = .overFullScreen
+    self.modalPresentationStyle = .custom
+    self.transitioningDelegate = detailsTransitioningDelegate
+
     stackView.translatesAutoresizingMaskIntoConstraints = false
+    stackView.axis = .vertical
+    stackView.distribution = .equalCentering
+    stackView.alignment = .bottom
+
+    stackViewContainer.translatesAutoresizingMaskIntoConstraints = false
+    stackViewContainer.layer.cornerRadius = 13
+    stackViewContainer.clipsToBounds = true
   }
 
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
 
-  override func viewDidLoad() {
-    super.viewDidLoad()
+  override func loadView() {
+    super.loadView()
 
-    view.addSubview(stackView)
+    view.addSubview(stackViewContainer)
+    stackViewContainer.addSubview(stackView)
+
     view.superview?.backgroundColor = UIColor.black.withAlphaComponent(0.7)
-    stackView.axis = .vertical
-    stackView.distribution = .equalCentering
-    stackView.alignment = .bottom
-    stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-    stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-    stackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
-    stackView.topAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+
+    stackViewContainer.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 8).isActive = true
+    stackViewContainer.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -8).isActive = true
+    stackViewContainer.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+    stackViewContainer.topAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+    stackViewContainer.backgroundColor = .orange
+
+    stackView.leadingAnchor.constraint(equalTo: stackViewContainer.leadingAnchor).isActive = true
+    stackView.trailingAnchor.constraint(equalTo: stackViewContainer.trailingAnchor).isActive = true
+    stackView.bottomAnchor.constraint(equalTo: stackViewContainer.bottomAnchor).isActive = true
+    stackView.topAnchor.constraint(equalTo: stackViewContainer.topAnchor).isActive = true
     buildActionViews()
   }
-
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
-//    self.transitionCoordinator?.containerView.backgroundColor = UIColor.black.withAlphaComponent(0.7)
-
-    guard let transitionCoordinator = self.transitionCoordinator else {
-      return
-    }
-
-    transitionCoordinator.containerView.wantsLae
-    transitionCoordinator.containerView.layer.backgroundColor = UIColor.red.cgColor
-  }
-
-//  override func viewDidAppear(_ animated: Bool) {
-//    super.viewDidAppear(animated)
-//    self.transitionCoordinator?.containerView.backgroundColor = UIColor.black.withAlphaComponent(0.7)
-//  }
 
   private func buildActionViews() {
     for action in actions {
