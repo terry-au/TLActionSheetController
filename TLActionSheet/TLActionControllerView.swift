@@ -30,7 +30,7 @@ private class TLActionSeparatorView: UIView {
 }
 
 private class TLActionView: UIControl {
-  static let impactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)
+  static let selectionFeedbackGenerator = UISelectionFeedbackGenerator()
 
   private let label = UILabel()
 
@@ -91,7 +91,7 @@ private class TLActionView: UIControl {
 
   func setHighlighted(_ highlighted: Bool, impact: Bool = false) {
     if impact && highlighted && self.isHighlighted != highlighted {
-      TLActionView.impactFeedbackGenerator.impactOccurred()
+      TLActionView.selectionFeedbackGenerator.selectionChanged()
     }
     overlay.isHidden = !highlighted
     isHighlighted = highlighted
