@@ -93,7 +93,7 @@ private class TLTransitionAnimator: NSObject, UIViewControllerAnimatedTransition
     actionController.view.layoutIfNeeded()
 
 
-    let offset = CGFloat(100)
+    let offset = CGFloat(40)
 
     if presenting {
       toViewController.view.transform = CGAffineTransform(
