@@ -5,6 +5,30 @@
 import Foundation
 import UIKit
 
+private class TLActionSeparatorView: UIView {
+  lazy var visualEffectView: UIVisualEffectView = {
+    let blurEffect = UIBlurEffect(style: UIBlurEffect.Style(rawValue: 1200) ?? .dark)
+    let vibrancyEffect = UIVibrancyEffect(blurEffect: blurEffect, style: .separator)
+
+    return UIVisualEffectView(effect: vibrancyEffect)
+  }()
+
+  required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+
+  override init(frame: CGRect) {
+    super.init(frame: frame)
+
+    visualEffectView.translatesAutoresizingMaskIntoConstraints = false
+    visualEffectView.contentView.backgroundColor = .white
+    addSubview(visualEffectView)
+
+    visualEffectView.heightAnchor.constraint(equalTo: self.heightAnchor).isActive = true
+    visualEffectView.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
+  }
+}
+
 private class TLActionView: UIControl {
   static let impactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)
 
@@ -83,9 +107,11 @@ internal class TLActionControllerView: UIView {
 
   internal var cancelAction: TLAlertAction?
 
-  private var controlledViews = Set<TLActionView>()
-
   internal weak var controller: TLActionController?
+
+  internal var header: UIView?
+
+  private var controlledViews = Set<TLActionView>()
 
   lazy var actionStackViewContainer: UIVisualEffectView! = {
     let visualEffectView = UIVisualEffectView(effect: self.backgroundEffect)
@@ -129,6 +155,14 @@ internal class TLActionControllerView: UIView {
 
   internal func prepareForDisplay() {
     for action in actions {
+      if actions.first !== action || self.header != nil {
+        let separatorView = TLActionSeparatorView()
+        separatorView.translatesAutoresizingMaskIntoConstraints = false
+        actionStackView.addArrangedSubview(separatorView)
+        separatorView.heightAnchor.constraint(equalToConstant: 0.33).isActive = true
+        separatorView.widthAnchor.constraint(equalTo: actionStackView.widthAnchor).isActive = true
+      }
+
       let actionView = TLActionView(action: action)
       actionStackView.addArrangedSubview(actionView)
       actionView.heightAnchor.constraint(equalToConstant: 57).isActive = true
