@@ -5,10 +5,14 @@
 import Foundation
 import UIKit
 
-private class TLDimmedPresentationController: UIPresentationController, UIViewControllerTransitioningDelegate {
+private class TLDimmedPresentationController: UIPresentationController, UIViewControllerTransitioningDelegate, UIGestureRecognizerDelegate {
 
   private lazy var tapGestureRecognizer: UITapGestureRecognizer! = {
-    UITapGestureRecognizer(target: self, action: #selector(onTapDimView(sender:)))
+    let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(onTapDimView(sender:)))
+    gestureRecognizer.cancelsTouchesInView = false
+    gestureRecognizer.delegate = self
+
+    return gestureRecognizer
   }()
 
   override func presentationTransitionWillBegin() {
@@ -25,7 +29,12 @@ private class TLDimmedPresentationController: UIPresentationController, UIViewCo
     containerView.backgroundColor = .clear
 
     transitionCoordinator.animate(alongsideTransition: { [weak self] context in
-      containerView.backgroundColor = UIColor.black.withAlphaComponent(0.48)
+      containerView.backgroundColor = UIColor.init { collection in
+        if collection.userInterfaceStyle == .dark {
+          return UIColor.black.withAlphaComponent(0.48)
+        }
+        return UIColor.black.withAlphaComponent(0.2)
+      }
     }, completion: nil)
   }
 
@@ -47,6 +56,10 @@ private class TLDimmedPresentationController: UIPresentationController, UIViewCo
 
     actionController.invokeCancelAction()
   }
+
+  func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+    touch.view == containerView || touch.view?.superview == containerView
+  }
 }
 
 private class TLTransitionAnimator: NSObject, UIViewControllerAnimatedTransitioning {
@@ -59,7 +72,7 @@ private class TLTransitionAnimator: NSObject, UIViewControllerAnimatedTransition
   }
 
   func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-    0.3
+    0.2
   }
 
   func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
@@ -85,18 +98,18 @@ private class TLTransitionAnimator: NSObject, UIViewControllerAnimatedTransition
     if presenting {
       toViewController.view.transform = CGAffineTransform(
           translationX: 0,
-          y: actionController.stackViewContainer.frame.height + offset
+          y: actionController.contentView.frame.height + offset
       )
       containerView.addSubview(toViewController.view)
     }
 
-    UIView.animate(withDuration: animationDuration, animations: {
+    UIView.animate(withDuration: animationDuration, delay: 0, options: .curveEaseOut, animations: {
       if self.presenting {
         toViewController.view.transform = CGAffineTransform.identity
       } else {
         fromViewController.view.transform = CGAffineTransform(
             translationX: 0,
-            y: actionController.stackViewContainer.frame.height + offset
+            y: actionController.contentView.frame.height + offset
         )
       }
     }, completion: { finished in
