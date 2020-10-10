@@ -5,14 +5,6 @@
 import Foundation
 import UIKit
 
-private class SomeView: UIView {
-  override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-    let res = super.gestureRecognizerShouldBegin(gestureRecognizer)
-    print(res)
-    return res
-  }
-}
-
 private class TLDimmedPresentationController: UIPresentationController, UIViewControllerTransitioningDelegate, UIGestureRecognizerDelegate {
 
   private lazy var tapGestureRecognizer: UITapGestureRecognizer! = {
