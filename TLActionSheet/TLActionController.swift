@@ -10,8 +10,11 @@ class TLActionController: UIViewController, UIViewControllerTransitioningDelegat
     actionView
   }()
 
-  lazy private var actionView: TLAlertControllerView! = {
-    TLAlertControllerView(actionController: self)
+  lazy private var actionView: TLActionControllerView! = {
+    let actionView = TLActionControllerView(actionController: self)
+    actionView.controller = self
+
+    return actionView
   }()
 
   private var actions: [TLAlertAction] {

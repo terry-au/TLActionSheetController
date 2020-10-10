@@ -6,11 +6,19 @@ import Foundation
 import UIKit
 
 private class TLActionView: UIControl {
+  static let impactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)
+
   private let label = UILabel()
 
-  let overlay = UIView()
+  private let effect = UIVibrancyEffect(blurEffect: UIBlurEffect(style: .systemMaterial), style: .tertiaryFill)
 
-  let action: TLAlertAction
+  private let overlay = UIView()
+
+  internal let action: TLAlertAction
+
+  private lazy var overlayEffectView: UIVisualEffectView! = {
+    UIVisualEffectView(effect: effect)
+  }()
 
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
@@ -21,9 +29,7 @@ private class TLActionView: UIControl {
     super.init(frame: .zero)
 
     self.translatesAutoresizingMaskIntoConstraints = false
-    overlay.translatesAutoresizingMaskIntoConstraints = false
-    overlay.backgroundColor = .red
-    overlay.isHidden = true
+    overlayEffectView.translatesAutoresizingMaskIntoConstraints = false
 
     isUserInteractionEnabled = true
 
@@ -31,34 +37,55 @@ private class TLActionView: UIControl {
     label.text = action.title
     label.textColor = (action.style == .destructive) ? .systemRed : .systemBlue
 
-    addSubview(overlay)
+    overlay.isHidden = true
+    overlay.backgroundColor = .white
+    overlay.translatesAutoresizingMaskIntoConstraints = false
+
+    overlayEffectView.contentView.addSubview(overlay)
+
+    addSubview(overlayEffectView)
     addSubview(label)
 
     label.translatesAutoresizingMaskIntoConstraints = false
     label.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
     label.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
 
-    overlay.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-    overlay.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
-    overlay.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
-    overlay.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
+    overlay.topAnchor.constraint(equalTo: overlayEffectView.topAnchor).isActive = true
+    overlay.bottomAnchor.constraint(equalTo: overlayEffectView.bottomAnchor).isActive = true
+    overlay.leadingAnchor.constraint(equalTo: overlayEffectView.leadingAnchor).isActive = true
+    overlay.trailingAnchor.constraint(equalTo: overlayEffectView.trailingAnchor).isActive = true
+
+    overlayEffectView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
+    overlayEffectView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+    overlayEffectView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
+    overlayEffectView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
   }
 
   override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
     self.frame.contains(point)
   }
+
+  func setHighlighted(_ highlighted: Bool, impact: Bool = false) {
+    if impact && highlighted && self.isHighlighted != highlighted {
+      TLActionView.impactFeedbackGenerator.impactOccurred()
+    }
+    overlay.isHidden = !highlighted
+    isHighlighted = highlighted
+  }
 }
 
-internal class TLAlertControllerView: UIView {
+internal class TLActionControllerView: UIView {
   let actionStackView = UIStackView()
 
-  let backgroundEffect = UIBlurEffect(style: .systemMaterial)
+  let backgroundEffect = UIBlurEffect(style: UIBlurEffect.Style(rawValue: 1200) ?? .dark)
 
   internal var actions: [TLAlertAction] = []
 
   internal var cancelAction: TLAlertAction?
 
   private var controlledViews = Set<TLActionView>()
+
+  internal weak var controller: TLActionController?
 
   lazy var actionStackViewContainer: UIVisualEffectView! = {
     let visualEffectView = UIVisualEffectView(effect: self.backgroundEffect)
@@ -114,9 +141,9 @@ internal class TLAlertControllerView: UIView {
     for row in controlledViews {
       for touch in touches {
         if row.point(inside: touch.location(in: self), with: event) {
-          row.overlay.isHidden = false
+          row.setHighlighted(true, impact: true)
         } else {
-          row.overlay.isHidden = true
+          row.setHighlighted(false)
         }
       }
     }
@@ -126,7 +153,7 @@ internal class TLAlertControllerView: UIView {
     for row in controlledViews {
       for touch in touches {
         if row.point(inside: touch.location(in: self), with: event) {
-          row.overlay.isHidden = false
+          row.setHighlighted(true)
         }
       }
     }
@@ -136,9 +163,9 @@ internal class TLAlertControllerView: UIView {
     for row in controlledViews {
       for touch in touches {
         if row.point(inside: touch.location(in: self), with: event) {
-          row.action.invoke()
+          controller?.invoke(action: row.action)
         }
-        row.overlay.isHidden = true
+        row.setHighlighted(false)
       }
     }
   }
