@@ -20,12 +20,16 @@ public class TLAlertAction {
 
   var style: Style
 
-  internal var handler: ((TLAlertAction) -> Void)?
+  private var handler: ((TLAlertAction) -> Void)?
 
   init(title: String?, style: TLAlertAction.Style, handler: ((TLAlertAction) -> Void)? = nil) {
     self.title = title
     self.handler = handler
     self.style = style
     isEnabled = true
+  }
+
+  func invoke() {
+    handler?(self)
   }
 }

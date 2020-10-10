@@ -49,9 +49,15 @@ class ViewController: UIViewController {
   @objc func openNew(sender: Any?) {
     let alertController = TLActionController()
 
-    alertController.addAction(.init(title: "Normal", style: .default))
-    alertController.addAction(.init(title: "Destructive", style: .destructive))
-    alertController.addAction(.init(title: "Cancel", style: .cancel))
+    alertController.addAction(.init(title: "Normal", style: .default) { action in
+      print("Normal tapped!")
+    })
+    alertController.addAction(.init(title: "Destructive", style: .destructive) { action in
+      print("Destructive tapped!")
+    })
+    alertController.addAction(.init(title: "Cancel", style: .cancel) { action in
+      print("Cancel tapped!")
+    })
 
     self.present(alertController, animated: true)
   }
