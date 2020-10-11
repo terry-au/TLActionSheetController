@@ -5,7 +5,7 @@
 import Foundation
 import UIKit
 
-public class TLAlertAction: CustomStringConvertible {
+public class TLAlertAction {
   public enum Style: Int {
     case `default` = 0
 
