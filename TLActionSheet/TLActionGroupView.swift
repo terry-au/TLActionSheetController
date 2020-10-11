@@ -10,7 +10,7 @@ private class TLActionView: UIControl {
 
   private static let cancelBackgroundColour = UIColor { collection in
     if collection.userInterfaceStyle == .dark {
-      return UIColor(red: 0.11, green: 0.11, blue: 0.118, alpha: 1)
+      return UIColor(red: 1 / 9, green: 1 / 9, blue: 1 / 8.5, alpha: 2 / 3)
     }
 
     return UIColor.white
