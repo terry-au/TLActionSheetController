@@ -103,18 +103,24 @@ private class TLTransitionAnimator: NSObject, UIViewControllerAnimatedTransition
       containerView.addSubview(toViewController.view)
     }
 
-    UIView.animate(withDuration: animationDuration, delay: 0, options: .curveEaseOut, animations: {
-      if self.presenting {
-        toViewController.view.transform = CGAffineTransform.identity
-      } else {
-        fromViewController.view.transform = CGAffineTransform(
-            translationX: 0,
-            y: actionController.contentView.frame.height + offset
-        )
-      }
-    }, completion: { finished in
-      transitionContext.completeTransition(finished)
-    })
+    UIView.animate(
+        withDuration: animationDuration,
+        delay: 0,
+        options: presenting ? .curveEaseOut : .curveEaseIn,
+        animations: {
+          if self.presenting {
+            toViewController.view.transform = CGAffineTransform.identity
+          } else {
+            fromViewController.view.transform = CGAffineTransform(
+                translationX: 0,
+                y: actionController.contentView.frame.height + offset
+            )
+          }
+        },
+        completion: { finished in
+          transitionContext.completeTransition(finished)
+        }
+    )
   }
 }
 

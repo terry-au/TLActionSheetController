@@ -6,6 +6,10 @@ import Foundation
 import UIKit
 
 class TLActionController: UIViewController, UIViewControllerTransitioningDelegate {
+  private var detailsTransitioningDelegate = TLDimmedModalTransitioningDelegate()
+
+  private var cancelAction: TLAlertAction?
+
   lazy var contentView: UIView! = {
     actionView
   }()
@@ -16,14 +20,6 @@ class TLActionController: UIViewController, UIViewControllerTransitioningDelegat
 
     return actionView
   }()
-
-  private var actions: [TLAlertAction] {
-    get {
-      actionView.actions
-    }
-  }
-
-  private var detailsTransitioningDelegate = TLDimmedModalTransitioningDelegate()
 
   init() {
     super.init(nibName: nil, bundle: nil)
@@ -51,28 +47,23 @@ class TLActionController: UIViewController, UIViewControllerTransitioningDelegat
   }
 
   public func addAction(_ action: TLAlertAction) {
-    if action.style == .cancel {
-      assert(
-          actionView.cancelAction == nil,
-          "TLActionController can only have one action with a style of TLAlertActionCancel"
-      )
-
-      actionView.cancelAction = action
-    } else {
-      actionView.actions.append(action)
+    action.sideEffect = {
+      self.dismiss(animated: true)
     }
-  }
 
-  internal func invoke(action: TLAlertAction) {
-    action.invoke()
-    self.dismiss(animated: true)
+    if action.style == .cancel {
+      cancelAction = action
+      print(cancelAction)
+    }
+
+    actionView.addAction(action)
   }
 
   internal func invokeCancelAction() {
-    guard let cancelAction = actionView.cancelAction else {
+    guard let cancelAction = self.cancelAction else {
       return
     }
 
-    invoke(action: cancelAction)
+    cancelAction.invoke()
   }
 }
