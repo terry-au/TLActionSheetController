@@ -5,7 +5,7 @@
 import Foundation
 import UIKit
 
-public class TLAlertAction {
+public class TLAlertAction: CustomStringConvertible {
   public enum Style: Int {
     case `default` = 0
 
@@ -22,6 +22,8 @@ public class TLAlertAction {
 
   private var handler: ((TLAlertAction) -> Void)?
 
+  internal var sideEffect: (() -> Void)?
+
   init(title: String?, style: TLAlertAction.Style, handler: ((TLAlertAction) -> Void)? = nil) {
     self.title = title
     self.handler = handler
@@ -31,5 +33,9 @@ public class TLAlertAction {
 
   func invoke() {
     handler?(self)
+
+    if let sideEffect = self.sideEffect {
+      sideEffect()
+    }
   }
 }
