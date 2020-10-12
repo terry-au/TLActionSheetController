@@ -124,6 +124,7 @@ private class TLActionSeparatorView: UIView {
 
 
 class TLActionGroupView: UIView {
+
   let actionStackView = UIStackView()
 
   private var controlledViews = Set<TLActionView>()
@@ -151,7 +152,6 @@ class TLActionGroupView: UIView {
 
     actionStackView.translatesAutoresizingMaskIntoConstraints = false
     actionStackView.axis = .vertical
-    actionStackView.distribution = .equalCentering
     actionStackView.alignment = .bottom
     actionStackView.isUserInteractionEnabled = false
 
@@ -174,14 +174,22 @@ class TLActionGroupView: UIView {
     actionStackView.topAnchor.constraint(equalTo: actionStackViewContainer.topAnchor).isActive = true
   }
 
+  func addAction(_ action: TLActionSheetAction) {
+    actions.append(action)
+  }
+
   internal func prepareForDisplay() {
+    if let header = self.header {
+      if let actionSheetHeader = header as? TLActionSheetHeader {
+        actionSheetHeader.setHasActionViewsBelow(actions.count > 0)
+      }
+      actionStackView.addArrangedSubview(header)
+      header.widthAnchor.constraint(equalTo: actionStackView.widthAnchor).isActive = true
+    }
+
     for action in actions {
-      if actions.first !== action || self.header != nil {
-        let separatorView = TLActionSeparatorView()
-        separatorView.translatesAutoresizingMaskIntoConstraints = false
-        actionStackView.addArrangedSubview(separatorView)
-        separatorView.heightAnchor.constraint(equalToConstant: 0.33).isActive = true
-        separatorView.widthAnchor.constraint(equalTo: actionStackView.widthAnchor).isActive = true
+      if actions.first !== action || header != nil {
+        addSeparator()
       }
 
       let actionView = TLActionView(action: action)
@@ -192,8 +200,12 @@ class TLActionGroupView: UIView {
     }
   }
 
-  func addAction(_ action: TLActionSheetAction) {
-    actions.append(action)
+  private func addSeparator() {
+    let separatorView = TLActionSeparatorView()
+    separatorView.translatesAutoresizingMaskIntoConstraints = false
+    actionStackView.addArrangedSubview(separatorView)
+    separatorView.heightAnchor.constraint(equalToConstant: 0.33).isActive = true
+    separatorView.widthAnchor.constraint(equalTo: actionStackView.widthAnchor).isActive = true
   }
 
   internal func handleTouchMoved(_ touch: UITouch, with event: UIEvent?) {

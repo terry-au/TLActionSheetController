@@ -7,9 +7,11 @@ import UIKit
 
 internal class TLActionSheetView: UIView {
 
-  internal weak var controller: TLActionSheet?
+  internal weak var controller: TLActionSheetController?
 
   internal let groupStack = UIStackView()
+
+  private var headerView: UIView?
 
   private var actionGroupView: TLActionGroupView? {
     didSet {
@@ -43,7 +45,7 @@ internal class TLActionSheetView: UIView {
     fatalError("init(coder:) has not been implemented")
   }
 
-  init(actionController: TLActionSheet) {
+  init(actionController: TLActionSheetController) {
     super.init(frame: .zero)
 
     isUserInteractionEnabled = true
@@ -77,6 +79,13 @@ internal class TLActionSheetView: UIView {
         actionGroupView.addAction(action)
         self.actionGroupView = actionGroupView
       }
+    }
+  }
+
+  func setHeader(_ header: UIView?) {
+    if let actionGroupView = self.actionGroupView ?? TLActionGroupView() {
+      actionGroupView.header = header
+      self.actionGroupView = actionGroupView
     }
   }
 

@@ -34,7 +34,7 @@ class ViewController: UIViewController {
 
   @objc func openClassic(sender: Any?) {
     let alertController = UIAlertController(
-        title: "Classic",
+        title: "UIAlertController",
         message: "I am a classic alert controller",
         preferredStyle: .actionSheet
     )
@@ -47,7 +47,10 @@ class ViewController: UIViewController {
   }
 
   @objc func openNew(sender: Any?) {
-    let actionSheet = TLActionSheet()
+    let actionSheet = TLActionSheetController(
+        title: "TLActionSheetController",
+        message: "I am a TLActionSheetController"
+    )
 
     actionSheet.addAction(.init(title: "Normal", style: .default) { action in
       print("Normal tapped!")

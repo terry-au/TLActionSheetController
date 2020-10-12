@@ -5,16 +5,18 @@
 import Foundation
 import UIKit
 
-class TLActionSheet: UIViewController, UIViewControllerTransitioningDelegate {
+class TLActionSheetController: UIViewController, UIViewControllerTransitioningDelegate {
   private var detailsTransitioningDelegate = TLDimmedModalTransitioningDelegate()
 
   private var cancelAction: TLActionSheetAction?
 
+  private var landscapeWidthAnchor: NSLayoutConstraint?
+
+  private var header: TLActionSheetHeader?
+
   lazy var contentView: UIView! = {
     actionView
   }()
-
-  var landscapeWidthAnchor: NSLayoutConstraint?
 
   lazy private var actionView: TLActionSheetView! = {
     let actionView = TLActionSheetView(actionController: self)
@@ -32,6 +34,15 @@ class TLActionSheet: UIViewController, UIViewControllerTransitioningDelegate {
     contentView.translatesAutoresizingMaskIntoConstraints = false
   }
 
+  convenience init(title: String, message: String) {
+    self.init()
+
+    header = TLActionSheetHeader(
+        title: NSAttributedString(string: title, attributes: [.font: UIFont.boldSystemFont(ofSize: 13)]),
+        message: NSAttributedString(string: message, attributes: [.font: UIFont.systemFont(ofSize: 13)])
+    )
+  }
+
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
@@ -40,17 +51,19 @@ class TLActionSheet: UIViewController, UIViewControllerTransitioningDelegate {
     super.loadView()
 
     view.addSubview(actionView)
+
+    actionView.setHeader(header)
     actionView.prepareForDisplay()
 
     contentView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
     contentView.topAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
 
     let leftPortraitAnchor = contentView.leftAnchor.constraint(lessThanOrEqualTo: view.leftAnchor, constant: 8)
-    leftPortraitAnchor.priority = .defaultLow
+    leftPortraitAnchor.priority = .defaultHigh
     leftPortraitAnchor.isActive = true
 
     let rightPortraitAnchor = contentView.rightAnchor.constraint(greaterThanOrEqualTo: view.rightAnchor, constant: -8)
-    rightPortraitAnchor.priority = .defaultLow
+    rightPortraitAnchor.priority = .defaultHigh
     rightPortraitAnchor.isActive = true
 
     let landscapeCentreXAnchor = contentView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
@@ -58,7 +71,7 @@ class TLActionSheet: UIViewController, UIViewControllerTransitioningDelegate {
     landscapeCentreXAnchor.isActive = true
 
     landscapeWidthAnchor = contentView.widthAnchor.constraint(equalToConstant: 287)
-    landscapeWidthAnchor?.priority = .defaultHigh
+    landscapeWidthAnchor?.priority = .required
 
     updateContentWidthAnchors(for: traitCollection)
   }
