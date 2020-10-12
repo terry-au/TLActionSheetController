@@ -12,7 +12,9 @@
 		CC13C4A305A967E3D0B31D4A /* TLActionSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC13CCC370E6A3300FDC3679 /* TLActionSheetView.swift */; };
 		CC13C57F9BD3F91E44CBA935 /* TLActionSheetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC13CB151621ECB3E2D40D5C /* TLActionSheetController.swift */; };
 		CC13CB4273C0397F72FF1523 /* TLActionSheetHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC13C26A6B23D582E6F6248B /* TLActionSheetHeader.swift */; };
+		CC13CBBC62DB1BF1D9E8EF49 /* LICENCE.md in Sources */ = {isa = PBXBuildFile; fileRef = CC13C12A401CE4151DA10E60 /* LICENCE.md */; };
 		CC13CD0ADED7DD3CC87401BA /* TLActionSheetAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC13C3C8BEB376B6AED6B7FA /* TLActionSheetAction.swift */; };
+		CC13CDCA544AC379F77E7B20 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = CC13C2CD2A1CDBB449CB6060 /* README.md */; };
 		CD5D4DA3252F0EAE00F109C6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD5D4DA2252F0EAE00F109C6 /* AppDelegate.swift */; };
 		CD5D4DA7252F0EAE00F109C6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD5D4DA6252F0EAE00F109C6 /* ViewController.swift */; };
 		CD5D4DAC252F0EAE00F109C6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CD5D4DAB252F0EAE00F109C6 /* Assets.xcassets */; };
@@ -39,22 +41,24 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		CC13C12A401CE4151DA10E60 /* LICENCE.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = LICENCE.md; sourceTree = "<group>"; };
 		CC13C26A6B23D582E6F6248B /* TLActionSheetHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TLActionSheetHeader.swift; sourceTree = "<group>"; };
+		CC13C2CD2A1CDBB449CB6060 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		CC13C3C8BEB376B6AED6B7FA /* TLActionSheetAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TLActionSheetAction.swift; sourceTree = "<group>"; };
 		CC13C912EBBCA8FD89EE9E26 /* TLActionGroupView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TLActionGroupView.swift; sourceTree = "<group>"; };
 		CC13CB151621ECB3E2D40D5C /* TLActionSheetController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TLActionSheetController.swift; sourceTree = "<group>"; };
 		CC13CBB092220B4940F2481C /* TLDimmedPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TLDimmedPresentationController.swift; sourceTree = "<group>"; };
 		CC13CCC370E6A3300FDC3679 /* TLActionSheetView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TLActionSheetView.swift; sourceTree = "<group>"; };
-		CD5D4D9F252F0EAE00F109C6 /* TLActionSheet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TLActionSheet.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD5D4D9F252F0EAE00F109C6 /* TLActionSheetController.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TLActionSheetController.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD5D4DA2252F0EAE00F109C6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CD5D4DA6252F0EAE00F109C6 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		CD5D4DAB252F0EAE00F109C6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CD5D4DAE252F0EAE00F109C6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CD5D4DB0252F0EAE00F109C6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		CD5D4DB5252F0EAF00F109C6 /* TLActionSheetTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TLActionSheetTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD5D4DB5252F0EAF00F109C6 /* TLActionSheetControllerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TLActionSheetControllerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD5D4DB9252F0EAF00F109C6 /* TLActionSheetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TLActionSheetTests.swift; sourceTree = "<group>"; };
 		CD5D4DBB252F0EAF00F109C6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		CD5D4DC0252F0EAF00F109C6 /* TLActionSheetUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TLActionSheetUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD5D4DC0252F0EAF00F109C6 /* TLActionSheetControllerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TLActionSheetControllerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD5D4DC4252F0EAF00F109C6 /* TLActionSheetUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TLActionSheetUITests.swift; sourceTree = "<group>"; };
 		CD5D4DC6252F0EAF00F109C6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -87,24 +91,26 @@
 		CD5D4D96252F0EAE00F109C6 = {
 			isa = PBXGroup;
 			children = (
-				CD5D4DA1252F0EAE00F109C6 /* TLActionSheet */,
-				CD5D4DB8252F0EAF00F109C6 /* TLActionSheetTests */,
-				CD5D4DC3252F0EAF00F109C6 /* TLActionSheetUITests */,
+				CD5D4DA1252F0EAE00F109C6 /* TLActionSheetController */,
+				CD5D4DB8252F0EAF00F109C6 /* TLActionSheetControllerTests */,
+				CD5D4DC3252F0EAF00F109C6 /* TLActionSheetControllerUITests */,
 				CD5D4DA0252F0EAE00F109C6 /* Products */,
+				CC13C2CD2A1CDBB449CB6060 /* README.md */,
+				CC13C12A401CE4151DA10E60 /* LICENCE.md */,
 			);
 			sourceTree = "<group>";
 		};
 		CD5D4DA0252F0EAE00F109C6 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				CD5D4D9F252F0EAE00F109C6 /* TLActionSheet.app */,
-				CD5D4DB5252F0EAF00F109C6 /* TLActionSheetTests.xctest */,
-				CD5D4DC0252F0EAF00F109C6 /* TLActionSheetUITests.xctest */,
+				CD5D4D9F252F0EAE00F109C6 /* TLActionSheetController.app */,
+				CD5D4DB5252F0EAF00F109C6 /* TLActionSheetControllerTests.xctest */,
+				CD5D4DC0252F0EAF00F109C6 /* TLActionSheetControllerUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		CD5D4DA1252F0EAE00F109C6 /* TLActionSheet */ = {
+		CD5D4DA1252F0EAE00F109C6 /* TLActionSheetController */ = {
 			isa = PBXGroup;
 			children = (
 				CD5D4DA2252F0EAE00F109C6 /* AppDelegate.swift */,
@@ -119,33 +125,33 @@
 				CC13C912EBBCA8FD89EE9E26 /* TLActionGroupView.swift */,
 				CC13C26A6B23D582E6F6248B /* TLActionSheetHeader.swift */,
 			);
-			path = TLActionSheet;
+			path = TLActionSheetController;
 			sourceTree = "<group>";
 		};
-		CD5D4DB8252F0EAF00F109C6 /* TLActionSheetTests */ = {
+		CD5D4DB8252F0EAF00F109C6 /* TLActionSheetControllerTests */ = {
 			isa = PBXGroup;
 			children = (
 				CD5D4DB9252F0EAF00F109C6 /* TLActionSheetTests.swift */,
 				CD5D4DBB252F0EAF00F109C6 /* Info.plist */,
 			);
-			path = TLActionSheetTests;
+			path = TLActionSheetControllerTests;
 			sourceTree = "<group>";
 		};
-		CD5D4DC3252F0EAF00F109C6 /* TLActionSheetUITests */ = {
+		CD5D4DC3252F0EAF00F109C6 /* TLActionSheetControllerUITests */ = {
 			isa = PBXGroup;
 			children = (
 				CD5D4DC4252F0EAF00F109C6 /* TLActionSheetUITests.swift */,
 				CD5D4DC6252F0EAF00F109C6 /* Info.plist */,
 			);
-			path = TLActionSheetUITests;
+			path = TLActionSheetControllerUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		CD5D4D9E252F0EAE00F109C6 /* TLActionSheet */ = {
+		CD5D4D9E252F0EAE00F109C6 /* TLActionSheetController */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CD5D4DC9252F0EAF00F109C6 /* Build configuration list for PBXNativeTarget "TLActionSheet" */;
+			buildConfigurationList = CD5D4DC9252F0EAF00F109C6 /* Build configuration list for PBXNativeTarget "TLActionSheetController" */;
 			buildPhases = (
 				CD5D4D9B252F0EAE00F109C6 /* Sources */,
 				CD5D4D9C252F0EAE00F109C6 /* Frameworks */,
@@ -155,14 +161,14 @@
 			);
 			dependencies = (
 			);
-			name = TLActionSheet;
+			name = TLActionSheetController;
 			productName = TLActionSheet;
-			productReference = CD5D4D9F252F0EAE00F109C6 /* TLActionSheet.app */;
+			productReference = CD5D4D9F252F0EAE00F109C6 /* TLActionSheetController.app */;
 			productType = "com.apple.product-type.application";
 		};
-		CD5D4DB4252F0EAF00F109C6 /* TLActionSheetTests */ = {
+		CD5D4DB4252F0EAF00F109C6 /* TLActionSheetControllerTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CD5D4DCC252F0EAF00F109C6 /* Build configuration list for PBXNativeTarget "TLActionSheetTests" */;
+			buildConfigurationList = CD5D4DCC252F0EAF00F109C6 /* Build configuration list for PBXNativeTarget "TLActionSheetControllerTests" */;
 			buildPhases = (
 				CD5D4DB1252F0EAF00F109C6 /* Sources */,
 				CD5D4DB2252F0EAF00F109C6 /* Frameworks */,
@@ -173,14 +179,14 @@
 			dependencies = (
 				CD5D4DB7252F0EAF00F109C6 /* PBXTargetDependency */,
 			);
-			name = TLActionSheetTests;
+			name = TLActionSheetControllerTests;
 			productName = TLActionSheetTests;
-			productReference = CD5D4DB5252F0EAF00F109C6 /* TLActionSheetTests.xctest */;
+			productReference = CD5D4DB5252F0EAF00F109C6 /* TLActionSheetControllerTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		CD5D4DBF252F0EAF00F109C6 /* TLActionSheetUITests */ = {
+		CD5D4DBF252F0EAF00F109C6 /* TLActionSheetControllerUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CD5D4DCF252F0EAF00F109C6 /* Build configuration list for PBXNativeTarget "TLActionSheetUITests" */;
+			buildConfigurationList = CD5D4DCF252F0EAF00F109C6 /* Build configuration list for PBXNativeTarget "TLActionSheetControllerUITests" */;
 			buildPhases = (
 				CD5D4DBC252F0EAF00F109C6 /* Sources */,
 				CD5D4DBD252F0EAF00F109C6 /* Frameworks */,
@@ -191,9 +197,9 @@
 			dependencies = (
 				CD5D4DC2252F0EAF00F109C6 /* PBXTargetDependency */,
 			);
-			name = TLActionSheetUITests;
+			name = TLActionSheetControllerUITests;
 			productName = TLActionSheetUITests;
-			productReference = CD5D4DC0252F0EAF00F109C6 /* TLActionSheetUITests.xctest */;
+			productReference = CD5D4DC0252F0EAF00F109C6 /* TLActionSheetControllerUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -218,7 +224,7 @@
 					};
 				};
 			};
-			buildConfigurationList = CD5D4D9A252F0EAE00F109C6 /* Build configuration list for PBXProject "TLActionSheet" */;
+			buildConfigurationList = CD5D4D9A252F0EAE00F109C6 /* Build configuration list for PBXProject "TLActionSheetController" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -231,9 +237,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				CD5D4D9E252F0EAE00F109C6 /* TLActionSheet */,
-				CD5D4DB4252F0EAF00F109C6 /* TLActionSheetTests */,
-				CD5D4DBF252F0EAF00F109C6 /* TLActionSheetUITests */,
+				CD5D4D9E252F0EAE00F109C6 /* TLActionSheetController */,
+				CD5D4DB4252F0EAF00F109C6 /* TLActionSheetControllerTests */,
+				CD5D4DBF252F0EAF00F109C6 /* TLActionSheetControllerUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -277,6 +283,8 @@
 				CC13C4A305A967E3D0B31D4A /* TLActionSheetView.swift in Sources */,
 				CC13C2DE1AB4ED909DE922D3 /* TLActionGroupView.swift in Sources */,
 				CC13CB4273C0397F72FF1523 /* TLActionSheetHeader.swift in Sources */,
+				CC13CDCA544AC379F77E7B20 /* README.md in Sources */,
+				CC13CBBC62DB1BF1D9E8EF49 /* LICENCE.md in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -301,12 +309,12 @@
 /* Begin PBXTargetDependency section */
 		CD5D4DB7252F0EAF00F109C6 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = CD5D4D9E252F0EAE00F109C6 /* TLActionSheet */;
+			target = CD5D4D9E252F0EAE00F109C6 /* TLActionSheetController */;
 			targetProxy = CD5D4DB6252F0EAF00F109C6 /* PBXContainerItemProxy */;
 		};
 		CD5D4DC2252F0EAF00F109C6 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = CD5D4D9E252F0EAE00F109C6 /* TLActionSheet */;
+			target = CD5D4D9E252F0EAE00F109C6 /* TLActionSheetController */;
 			targetProxy = CD5D4DC1252F0EAF00F109C6 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -450,7 +458,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = WVW2QXS9H2;
-				INFOPLIST_FILE = TLActionSheet/Info.plist;
+				INFOPLIST_FILE = TLActionSheetController/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -472,7 +480,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = WVW2QXS9H2;
-				INFOPLIST_FILE = TLActionSheet/Info.plist;
+				INFOPLIST_FILE = TLActionSheetController/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -492,7 +500,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = WVW2QXS9H2;
-				INFOPLIST_FILE = TLActionSheetTests/Info.plist;
+				INFOPLIST_FILE = TLActionSheetControllerTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -503,7 +511,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TLActionSheet.app/TLActionSheet";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TLActionSheetController.app/TLActionSheetController";
 			};
 			name = Debug;
 		};
@@ -514,7 +522,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = WVW2QXS9H2;
-				INFOPLIST_FILE = TLActionSheetTests/Info.plist;
+				INFOPLIST_FILE = TLActionSheetControllerTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -525,7 +533,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TLActionSheet.app/TLActionSheet";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TLActionSheetController.app/TLActionSheetController";
 			};
 			name = Release;
 		};
@@ -535,7 +543,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = WVW2QXS9H2;
-				INFOPLIST_FILE = TLActionSheetUITests/Info.plist;
+				INFOPLIST_FILE = TLActionSheetControllerUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -555,7 +563,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = WVW2QXS9H2;
-				INFOPLIST_FILE = TLActionSheetUITests/Info.plist;
+				INFOPLIST_FILE = TLActionSheetControllerUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -572,7 +580,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		CD5D4D9A252F0EAE00F109C6 /* Build configuration list for PBXProject "TLActionSheet" */ = {
+		CD5D4D9A252F0EAE00F109C6 /* Build configuration list for PBXProject "TLActionSheetController" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CD5D4DC7252F0EAF00F109C6 /* Debug */,
@@ -581,7 +589,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CD5D4DC9252F0EAF00F109C6 /* Build configuration list for PBXNativeTarget "TLActionSheet" */ = {
+		CD5D4DC9252F0EAF00F109C6 /* Build configuration list for PBXNativeTarget "TLActionSheetController" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CD5D4DCA252F0EAF00F109C6 /* Debug */,
@@ -590,7 +598,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CD5D4DCC252F0EAF00F109C6 /* Build configuration list for PBXNativeTarget "TLActionSheetTests" */ = {
+		CD5D4DCC252F0EAF00F109C6 /* Build configuration list for PBXNativeTarget "TLActionSheetControllerTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CD5D4DCD252F0EAF00F109C6 /* Debug */,
@@ -599,7 +607,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CD5D4DCF252F0EAF00F109C6 /* Build configuration list for PBXNativeTarget "TLActionSheetUITests" */ = {
+		CD5D4DCF252F0EAF00F109C6 /* Build configuration list for PBXNativeTarget "TLActionSheetControllerUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CD5D4DD0252F0EAF00F109C6 /* Debug */,
