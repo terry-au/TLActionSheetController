@@ -50,7 +50,7 @@ private class TLDimmedPresentationController: UIPresentationController, UIViewCo
   }
 
   @objc func onTapDimView(sender: Any?) {
-    guard let actionController = presentedViewController as? TLActionSheet else {
+    guard let actionController = presentedViewController as? TLActionSheetController else {
       return
     }
 
@@ -82,8 +82,8 @@ private class TLTransitionAnimator: NSObject, UIViewControllerAnimatedTransition
 
     let animationDuration = transitionDuration(using: transitionContext)
 
-    guard let actionController = presenting ? (toViewController as? TLActionSheet) : (
-        fromViewController as? TLActionSheet
+    guard let actionController = presenting ? (toViewController as? TLActionSheetController) : (
+        fromViewController as? TLActionSheetController
     ) else {
       return
     }
