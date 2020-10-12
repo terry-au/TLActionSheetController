@@ -38,7 +38,7 @@ private class TLActionView: UIControl {
 
   private let overlay = UIView()
 
-  internal let action: TLAlertAction
+  internal let action: TLActionSheetAction
 
   private lazy var overlayEffectView: UIVisualEffectView! = {
     UIVisualEffectView(effect: effect)
@@ -48,7 +48,7 @@ private class TLActionView: UIControl {
     fatalError("init(coder:) has not been implemented")
   }
 
-  init(action: TLAlertAction) {
+  init(action: TLActionSheetAction) {
     self.action = action
     super.init(frame: .zero)
 
@@ -128,7 +128,7 @@ class TLActionGroupView: UIView {
 
   private var controlledViews = Set<TLActionView>()
 
-  internal var actions: [TLAlertAction] = []
+  internal var actions: [TLActionSheetAction] = []
 
   internal var header: UIView?
 
@@ -192,7 +192,7 @@ class TLActionGroupView: UIView {
     }
   }
 
-  func addAction(_ action: TLAlertAction) {
+  func addAction(_ action: TLActionSheetAction) {
     actions.append(action)
   }
 

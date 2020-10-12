@@ -23,7 +23,7 @@ class ViewController: UIViewController {
     classicButton.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
     classicButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
 
-    newButton.setTitle("Present TLAlertController", for: .normal)
+    newButton.setTitle("Present TLActionSheet", for: .normal)
     newButton.addTarget(self, action: #selector(openNew(sender:)), for: .touchUpInside)
     view.addSubview(newButton)
 
@@ -47,19 +47,19 @@ class ViewController: UIViewController {
   }
 
   @objc func openNew(sender: Any?) {
-    let alertController = TLActionController()
+    let actionSheet = TLActionSheet()
 
-    alertController.addAction(.init(title: "Normal", style: .default) { action in
+    actionSheet.addAction(.init(title: "Normal", style: .default) { action in
       print("Normal tapped!")
     })
-    alertController.addAction(.init(title: "Destructive", style: .destructive) { action in
+    actionSheet.addAction(.init(title: "Destructive", style: .destructive) { action in
       print("Destructive tapped!")
     })
-    alertController.addAction(.init(title: "Cancel", style: .cancel) { action in
+    actionSheet.addAction(.init(title: "Cancel", style: .cancel) { action in
       print("Cancel tapped!")
     })
 
-    self.present(alertController, animated: true)
+    self.present(actionSheet, animated: true)
   }
 }
 

@@ -5,9 +5,9 @@
 import Foundation
 import UIKit
 
-internal class TLActionControllerView: UIView {
+internal class TLActionSheetView: UIView {
 
-  internal weak var controller: TLActionController?
+  internal weak var controller: TLActionSheet?
 
   internal let groupStack = UIStackView()
 
@@ -37,13 +37,13 @@ internal class TLActionControllerView: UIView {
     }
   }
 
-  private var actions: [TLAlertAction] = []
+  private var actions: [TLActionSheetAction] = []
 
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
 
-  init(actionController: TLActionController) {
+  init(actionController: TLActionSheet) {
     super.init(frame: .zero)
 
     isUserInteractionEnabled = true
@@ -66,7 +66,7 @@ internal class TLActionControllerView: UIView {
     cancelActionGroupView?.prepareForDisplay()
   }
 
-  func addAction(_ action: TLAlertAction) {
+  func addAction(_ action: TLActionSheetAction) {
     if action.style == .cancel {
       if let cancelActionGroupView = self.cancelActionGroupView ?? TLActionGroupView() {
         cancelActionGroupView.addAction(action)

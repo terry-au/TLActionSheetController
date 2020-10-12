@@ -5,10 +5,10 @@
 import Foundation
 import UIKit
 
-class TLActionController: UIViewController, UIViewControllerTransitioningDelegate {
+class TLActionSheet: UIViewController, UIViewControllerTransitioningDelegate {
   private var detailsTransitioningDelegate = TLDimmedModalTransitioningDelegate()
 
-  private var cancelAction: TLAlertAction?
+  private var cancelAction: TLActionSheetAction?
 
   lazy var contentView: UIView! = {
     actionView
@@ -16,8 +16,8 @@ class TLActionController: UIViewController, UIViewControllerTransitioningDelegat
 
   var landscapeWidthAnchor: NSLayoutConstraint?
 
-  lazy private var actionView: TLActionControllerView! = {
-    let actionView = TLActionControllerView(actionController: self)
+  lazy private var actionView: TLActionSheetView! = {
+    let actionView = TLActionSheetView(actionController: self)
     actionView.controller = self
 
     return actionView
@@ -79,7 +79,7 @@ class TLActionController: UIViewController, UIViewControllerTransitioningDelegat
     updateContentWidthAnchors(for: newCollection)
   }
 
-  public func addAction(_ action: TLAlertAction) {
+  public func addAction(_ action: TLActionSheetAction) {
     action.sideEffect = {
       self.dismiss(animated: true)
     }

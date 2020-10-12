@@ -5,7 +5,7 @@
 import Foundation
 import UIKit
 
-public class TLAlertAction {
+public class TLActionSheetAction {
   public enum Style: Int {
     case `default` = 0
 
@@ -20,11 +20,11 @@ public class TLAlertAction {
 
   var style: Style
 
-  private var handler: ((TLAlertAction) -> Void)?
+  private var handler: ((TLActionSheetAction) -> Void)?
 
   internal var sideEffect: (() -> Void)?
 
-  init(title: String?, style: TLAlertAction.Style, handler: ((TLAlertAction) -> Void)? = nil) {
+  init(title: String?, style: TLActionSheetAction.Style, handler: ((TLActionSheetAction) -> Void)? = nil) {
     self.title = title
     self.handler = handler
     self.style = style
