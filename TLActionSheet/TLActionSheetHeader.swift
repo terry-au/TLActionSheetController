@@ -14,6 +14,8 @@ class TLActionSheetHeader: UIView {
 
   private let messageLabel = UILabel()
 
+  private let stackView = UIStackView()
+
   internal var bottomConstraint: NSLayoutConstraint?
 
   lazy var visualEffectView: UIVisualEffectView = {
@@ -27,24 +29,31 @@ class TLActionSheetHeader: UIView {
     fatalError("init(coder:) has not been implemented")
   }
 
-  init(title: NSAttributedString, message: NSAttributedString) {
+  init(title: NSAttributedString?, message: NSAttributedString?) {
     super.init(frame: .zero)
 
     self.translatesAutoresizingMaskIntoConstraints = false
 
     addSubview(visualEffectView)
+    visualEffectView.contentView.addSubview(stackView)
     visualEffectView.contentView.addSubview(titleLabel)
     visualEffectView.contentView.addSubview(messageLabel)
 
-    titleLabel.attributedText = title
+    setTitleLabelText(attributedString: title)
     titleLabel.numberOfLines = 0
     titleLabel.textAlignment = .center
+    stackView.addArrangedSubview(titleLabel)
 
-    messageLabel.attributedText = message
+    setMessageLabelText(attributedString: message)
     messageLabel.numberOfLines = 0
     messageLabel.textAlignment = .center
+    stackView.addArrangedSubview(messageLabel)
+
+    stackView.spacing = 8
+    stackView.axis = .vertical
 
     visualEffectView.translatesAutoresizingMaskIntoConstraints = false
+    stackView.translatesAutoresizingMaskIntoConstraints = false
     titleLabel.translatesAutoresizingMaskIntoConstraints = false
     messageLabel.translatesAutoresizingMaskIntoConstraints = false
 
@@ -54,33 +63,29 @@ class TLActionSheetHeader: UIView {
     bottomConstraint = visualEffectView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -TLActionSheetHeader.padding)
     bottomConstraint?.isActive = true
 
-    titleLabel.topAnchor.constraint(equalTo: visualEffectView.topAnchor).isActive = true
+    stackView.topAnchor.constraint(equalTo: visualEffectView.topAnchor).isActive = true
+    stackView.leftAnchor.constraint(equalTo: visualEffectView.leftAnchor).isActive = true
+    stackView.rightAnchor.constraint(equalTo: visualEffectView.rightAnchor).isActive = true
+    stackView.bottomAnchor.constraint(equalTo: visualEffectView.bottomAnchor).isActive = true
+
     titleLabel.leftAnchor.constraint(equalTo: visualEffectView.leftAnchor).isActive = true
     titleLabel.rightAnchor.constraint(equalTo: visualEffectView.rightAnchor).isActive = true
 
-    messageLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8).isActive = true
     messageLabel.leftAnchor.constraint(equalTo: visualEffectView.leftAnchor).isActive = true
     messageLabel.rightAnchor.constraint(equalTo: visualEffectView.rightAnchor).isActive = true
-    messageLabel.bottomAnchor.constraint(equalTo: visualEffectView.bottomAnchor).isActive = true
   }
 
   func setHasActionViewsBelow(_ hasViewBelow: Bool) {
     bottomConstraint?.constant = hasViewBelow ? -TLActionSheetHeader.extendedPadding : -TLActionSheetHeader.padding
   }
 
-  func setTitleLabelText(attributedString: NSAttributedString) {
+  private func setTitleLabelText(attributedString: NSAttributedString?) {
     titleLabel.attributedText = attributedString
-
-    if titleLabel.attributedText == nil {
-      titleLabel.isHidden = true
-    }
+    titleLabel.isHidden = titleLabel.attributedText == nil
   }
 
-  func setMessageLabelText(attributedString: NSAttributedString) {
+  private func setMessageLabelText(attributedString: NSAttributedString?) {
     messageLabel.attributedText = attributedString
-
-    if messageLabel.attributedText == nil {
-      messageLabel.isHidden = true
-    }
+    messageLabel.isHidden = messageLabel.attributedText == nil
   }
 }
