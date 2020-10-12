@@ -14,6 +14,8 @@ class TLActionController: UIViewController, UIViewControllerTransitioningDelegat
     actionView
   }()
 
+  var landscapeWidthAnchor: NSLayoutConstraint?
+
   lazy private var actionView: TLActionControllerView! = {
     let actionView = TLActionControllerView(actionController: self)
     actionView.controller = self
@@ -40,10 +42,43 @@ class TLActionController: UIViewController, UIViewControllerTransitioningDelegat
     view.addSubview(actionView)
     actionView.prepareForDisplay()
 
-    contentView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 8).isActive = true
-    contentView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -8).isActive = true
     contentView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
     contentView.topAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+
+
+    let leftPortraitAnchor = contentView.leftAnchor.constraint(lessThanOrEqualTo: view.leftAnchor, constant: 8)
+    leftPortraitAnchor.priority = .defaultLow
+    leftPortraitAnchor.isActive = true
+
+    let rightPortraitAnchor = contentView.rightAnchor.constraint(greaterThanOrEqualTo: view.rightAnchor, constant: -8)
+    rightPortraitAnchor.priority = .defaultLow
+    rightPortraitAnchor.isActive = true
+
+    let landscapeCentreXAnchor = contentView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+    landscapeCentreXAnchor.priority = .defaultHigh
+    landscapeCentreXAnchor.isActive = true
+
+    landscapeWidthAnchor = contentView.widthAnchor.constraint(equalToConstant: 287)
+    landscapeWidthAnchor?.priority = .defaultHigh
+
+
+    updateContentWidthAnchors(for: traitCollection)
+  }
+
+  func updateContentWidthAnchors(`for` traitCollection: UITraitCollection) {
+    if traitCollection.horizontalSizeClass == .compact && traitCollection.verticalSizeClass == .compact {
+      landscapeWidthAnchor?.isActive = true
+    } else {
+      landscapeWidthAnchor?.isActive = false
+    }
+  }
+
+  override func willTransition(
+      to newCollection: UITraitCollection,
+      with coordinator: UIViewControllerTransitionCoordinator
+  ) {
+    super.willTransition(to: newCollection, with: coordinator)
+    updateContentWidthAnchors(for: newCollection)
   }
 
   public func addAction(_ action: TLAlertAction) {
