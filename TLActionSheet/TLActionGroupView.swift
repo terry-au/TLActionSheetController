@@ -16,6 +16,22 @@ private class TLActionView: UIControl {
     return UIColor.white
   }
 
+  private static let labelColour = UIColor { collection in
+    if collection.userInterfaceStyle == .dark {
+      return UIColor(red: 0.275, green: 0.576, blue: 1, alpha: 1)
+    }
+
+    return UIColor(red: 0, green: 0.478, blue: 1, alpha: 1)
+  }
+
+  private static let destructiveLabelColour = UIColor { collection in
+    if collection.userInterfaceStyle == .dark {
+      return UIColor(red: 1, green: 0.271, blue: 0.227, alpha: 1)
+    }
+
+    return UIColor(red: 1, green: 0.231, blue: 0.188, alpha: 1)
+  }
+
   private let label = UILabel()
 
   private let effect = UIVibrancyEffect(blurEffect: UIBlurEffect(style: .systemMaterial), style: .tertiaryFill)
@@ -42,7 +58,7 @@ private class TLActionView: UIControl {
 
     label.font = (action.style == .cancel) ? .systemFont(ofSize: 20, weight: .semibold) : .systemFont(ofSize: 20)
     label.text = action.title
-    label.textColor = (action.style == .destructive) ? .systemRed : .systemBlue
+    label.textColor = (action.style == .destructive) ? TLActionView.destructiveLabelColour : TLActionView.labelColour
 
     overlay.isHidden = true
     overlay.backgroundColor = .white
