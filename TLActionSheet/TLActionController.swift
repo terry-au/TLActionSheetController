@@ -45,7 +45,6 @@ class TLActionController: UIViewController, UIViewControllerTransitioningDelegat
     contentView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
     contentView.topAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
 
-
     let leftPortraitAnchor = contentView.leftAnchor.constraint(lessThanOrEqualTo: view.leftAnchor, constant: 8)
     leftPortraitAnchor.priority = .defaultLow
     leftPortraitAnchor.isActive = true
@@ -60,7 +59,6 @@ class TLActionController: UIViewController, UIViewControllerTransitioningDelegat
 
     landscapeWidthAnchor = contentView.widthAnchor.constraint(equalToConstant: 287)
     landscapeWidthAnchor?.priority = .defaultHigh
-
 
     updateContentWidthAnchors(for: traitCollection)
   }
@@ -88,7 +86,6 @@ class TLActionController: UIViewController, UIViewControllerTransitioningDelegat
 
     if action.style == .cancel {
       cancelAction = action
-      print(cancelAction)
     }
 
     actionView.addAction(action)

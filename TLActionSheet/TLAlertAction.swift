@@ -33,9 +33,6 @@ public class TLAlertAction {
 
   func invoke() {
     handler?(self)
-
-    if let sideEffect = self.sideEffect {
-      sideEffect()
-    }
+    sideEffect?()
   }
 }
