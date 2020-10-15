@@ -19,6 +19,7 @@ This replacement aims to solve all of those issues, whilst maintain the same loo
 - [ ] Customise action labels.
 - [ ] Icon support.
 - [ ] Custom header API.
+- [ ] Popover presentation support.
 
 ## LICENCE
 TLActionSheetController is licensed under the LGPL Version 3 licence. See the [LICENCE](LICENCE) file for more info.
