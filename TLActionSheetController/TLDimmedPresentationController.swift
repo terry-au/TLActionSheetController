@@ -72,7 +72,7 @@ private class TLTransitionAnimator: NSObject, UIViewControllerAnimatedTransition
   }
 
   func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-    0.2
+    0.404
   }
 
   func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
@@ -93,7 +93,7 @@ private class TLTransitionAnimator: NSObject, UIViewControllerAnimatedTransition
     actionController.view.layoutIfNeeded()
 
 
-    let offset = CGFloat(40)
+    let offset = containerView.safeAreaInsets.bottom
 
     if presenting {
       toViewController.view.transform = CGAffineTransform(
@@ -104,9 +104,11 @@ private class TLTransitionAnimator: NSObject, UIViewControllerAnimatedTransition
     }
 
     UIView.animate(
-        withDuration: animationDuration,
+        withDuration: 0.404,
         delay: 0,
-        options: presenting ? .curveEaseOut : .curveEaseIn,
+        usingSpringWithDamping: 600,
+        initialSpringVelocity: 0,
+        options: [.beginFromCurrentState, .allowUserInteraction],
         animations: {
           if self.presenting {
             toViewController.view.transform = CGAffineTransform.identity
