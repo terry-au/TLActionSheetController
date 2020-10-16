@@ -23,7 +23,7 @@ class ViewController: UIViewController {
     classicButton.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
     classicButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
 
-    newButton.setTitle("Present TLActionSheet", for: .normal)
+    newButton.setTitle("Present TLActionSheetController", for: .normal)
     newButton.addTarget(self, action: #selector(openNew(sender:)), for: .touchUpInside)
     view.addSubview(newButton)
 
