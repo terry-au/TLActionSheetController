@@ -6,9 +6,11 @@ import Foundation
 import UIKit
 
 class TLActionSheetHeader: UIView {
-  private static let padding: CGFloat = 16
+  private static let padding: CGFloat = 14.666
 
-  private static let extendedPadding: CGFloat = 24
+  private static let interLabelSpacing: CGFloat = 12.333
+
+  private static let extendedPadding: CGFloat = 24.666
 
   private let titleLabel = UILabel()
 
@@ -49,7 +51,7 @@ class TLActionSheetHeader: UIView {
     messageLabel.textAlignment = .center
     stackView.addArrangedSubview(messageLabel)
 
-    stackView.spacing = 8
+    stackView.spacing = TLActionSheetHeader.interLabelSpacing
     stackView.axis = .vertical
 
     visualEffectView.translatesAutoresizingMaskIntoConstraints = false

@@ -10,7 +10,7 @@ private class TLActionView: UIControl {
 
   private static let cancelBackgroundColour = UIColor { collection in
     if collection.userInterfaceStyle == .dark {
-      return UIColor(red: 1 / 9, green: 1 / 9, blue: 1 / 8.5, alpha: 2 / 3)
+      return UIColor(red: 0.173, green: 0.173, blue: 0.180, alpha: 1)
     }
 
     return UIColor.white
@@ -60,11 +60,22 @@ private class TLActionView: UIControl {
     label.text = action.title
     label.textColor = (action.style == .destructive) ? TLActionView.destructiveLabelColour : TLActionView.labelColour
 
+
+    if action.style == .cancel {
+      let cancelBgView = UIView()
+      cancelBgView.backgroundColor = TLActionView.cancelBackgroundColour
+      cancelBgView.translatesAutoresizingMaskIntoConstraints = false
+      addSubview(cancelBgView)
+
+      cancelBgView.topAnchor.constraint(equalTo: topAnchor).isActive = true
+      cancelBgView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+      cancelBgView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+      cancelBgView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+    }
+
     overlay.isHidden = true
     overlay.backgroundColor = .white
-    backgroundColor = (action.style == .cancel) ? TLActionView.cancelBackgroundColour : nil
     overlay.translatesAutoresizingMaskIntoConstraints = false
-
     overlayEffectView.contentView.addSubview(overlay)
 
     addSubview(overlayEffectView)
