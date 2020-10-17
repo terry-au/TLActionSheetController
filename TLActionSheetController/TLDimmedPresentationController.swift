@@ -33,7 +33,13 @@ private class TLDimmedPresentationController: UIPresentationController, UIViewCo
         if isDarkMode {
           return UIColor.black.withAlphaComponent(0.48)
         }
-        return UIColor.black.withAlphaComponent(0.2)
+
+        if #available(iOS 13.0, *) {
+          return UIColor.black.withAlphaComponent(0.2)
+        } else {
+          /* Darker pre-iOS 13, as the foreground of the action sheet is white. */
+          return UIColor.black.withAlphaComponent(0.4)
+        }
       }
     }, completion: nil)
   }
