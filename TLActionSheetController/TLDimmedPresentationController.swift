@@ -29,8 +29,8 @@ private class TLDimmedPresentationController: UIPresentationController, UIViewCo
     containerView.backgroundColor = .clear
 
     transitionCoordinator.animate(alongsideTransition: { [weak self] context in
-      containerView.backgroundColor = UIColor.init { collection in
-        if collection.userInterfaceStyle == .dark {
+      containerView.backgroundColor = UIColor.themed { isDarkMode in
+        if isDarkMode {
           return UIColor.black.withAlphaComponent(0.48)
         }
         return UIColor.black.withAlphaComponent(0.2)
