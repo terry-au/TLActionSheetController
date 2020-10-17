@@ -26,7 +26,7 @@ internal extension UIColor {
 internal extension UIBlurEffect.Style {
   static var actionSheetStyle: UIBlurEffect.Style! = {
     if #available(iOS 13.0, *) {
-      return UIBlurEffect.Style(rawValue: 1200) ?? .dark
+      return .systemMaterial
     }
 
     return .extraLight
