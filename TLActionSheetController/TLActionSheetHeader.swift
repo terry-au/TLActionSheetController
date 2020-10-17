@@ -20,11 +20,14 @@ class TLActionSheetHeader: UIView {
 
   internal var bottomConstraint: NSLayoutConstraint?
 
-  lazy var visualEffectView: UIVisualEffectView = {
-    let blurEffect = UIBlurEffect(style: UIBlurEffect.Style(rawValue: 1200) ?? .dark)
-    let vibrancyEffect = UIVibrancyEffect(blurEffect: blurEffect, style: .secondaryLabel)
-
-    return UIVisualEffectView(effect: vibrancyEffect)
+  lazy var visualEffectView: UIView = {
+    let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.actionSheetStyle)
+    if #available(iOS 13.0, *) {
+      let vibrancyEffect = UIVibrancyEffect(blurEffect: blurEffect, style: .secondaryLabel)
+      return UIVisualEffectView(effect: vibrancyEffect)
+    } else {
+      return UIView(frame: .zero)
+    }
   }()
 
   required init?(coder: NSCoder) {
@@ -36,10 +39,18 @@ class TLActionSheetHeader: UIView {
 
     self.translatesAutoresizingMaskIntoConstraints = false
 
+    if let visualEffectView = self.visualEffectView as? UIVisualEffectView {
+      visualEffectView.contentView.addSubview(stackView)
+      visualEffectView.contentView.addSubview(titleLabel)
+      visualEffectView.contentView.addSubview(messageLabel)
+    } else {
+      visualEffectView.addSubview(stackView)
+      visualEffectView.addSubview(titleLabel)
+      visualEffectView.addSubview(messageLabel)
+      backgroundColor = .white
+    }
+
     addSubview(visualEffectView)
-    visualEffectView.contentView.addSubview(stackView)
-    visualEffectView.contentView.addSubview(titleLabel)
-    visualEffectView.contentView.addSubview(messageLabel)
 
     setTitleLabelText(attributedString: title)
     titleLabel.numberOfLines = 0
@@ -61,8 +72,14 @@ class TLActionSheetHeader: UIView {
 
     visualEffectView.topAnchor.constraint(equalTo: topAnchor, constant: TLActionSheetHeader.padding).isActive = true
     visualEffectView.leftAnchor.constraint(equalTo: leftAnchor, constant: TLActionSheetHeader.padding).isActive = true
-    visualEffectView.rightAnchor.constraint(equalTo: rightAnchor, constant: -TLActionSheetHeader.padding).isActive = true
-    bottomConstraint = visualEffectView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -TLActionSheetHeader.padding)
+    visualEffectView.rightAnchor.constraint(
+        equalTo: rightAnchor,
+        constant: -TLActionSheetHeader.padding
+    ).isActive = true
+    bottomConstraint = visualEffectView.bottomAnchor.constraint(
+        equalTo: bottomAnchor,
+        constant: -TLActionSheetHeader.padding
+    )
     bottomConstraint?.isActive = true
 
     stackView.topAnchor.constraint(equalTo: visualEffectView.topAnchor).isActive = true

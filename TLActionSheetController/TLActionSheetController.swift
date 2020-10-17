@@ -37,16 +37,30 @@ class TLActionSheetController: UIViewController, UIViewControllerTransitioningDe
   convenience init(title: String?, message: String? = nil) {
     self.init()
 
+    let labelColour: UIColor = {
+      if #available(iOS 13.0, *) {
+        return .label
+      } else {
+        return UIColor(white: 0.56, alpha: 1)
+      }
+    }()
+
     let titleAttributedString = { () -> NSAttributedString? in
       if let title = title {
-        return NSAttributedString(string: title, attributes: [.font: UIFont.boldSystemFont(ofSize: 13)])
+        return NSAttributedString(
+            string: title,
+            attributes: [.foregroundColor: labelColour, .font: UIFont.boldSystemFont(ofSize: 13)]
+        )
       }
       return nil
     }()
 
     let messageAttributedString = { () -> NSAttributedString? in
       if let message = message {
-        return NSAttributedString(string: message, attributes: [.font: UIFont.systemFont(ofSize: 13)])
+        return NSAttributedString(
+            string: message,
+            attributes: [.foregroundColor: labelColour, .font: UIFont.systemFont(ofSize: 13)]
+        )
       }
       return nil
     }()

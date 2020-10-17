@@ -8,24 +8,24 @@ import UIKit
 private class TLActionView: UIControl {
   private static let selectionFeedbackGenerator = UISelectionFeedbackGenerator()
 
-  private static let cancelBackgroundColour = UIColor { collection in
-    if collection.userInterfaceStyle == .dark {
+  private static let cancelBackgroundColour = UIColor.themed { collection in
+    if collection {
       return UIColor(red: 0.173, green: 0.173, blue: 0.180, alpha: 1)
     }
 
     return UIColor.white
   }
 
-  private static let labelColour = UIColor { collection in
-    if collection.userInterfaceStyle == .dark {
+  private static let labelColour = UIColor.themed { isDarkMode in
+    if isDarkMode {
       return UIColor(red: 0.275, green: 0.576, blue: 1, alpha: 1)
     }
 
     return UIColor(red: 0, green: 0.478, blue: 1, alpha: 1)
   }
 
-  private static let destructiveLabelColour = UIColor { collection in
-    if collection.userInterfaceStyle == .dark {
+  private static let destructiveLabelColour = UIColor.themed { isDarkMode in
+    if isDarkMode {
       return UIColor(red: 1, green: 0.271, blue: 0.227, alpha: 1)
     }
 
@@ -34,14 +34,22 @@ private class TLActionView: UIControl {
 
   private let label = UILabel()
 
-  private let effect = UIVibrancyEffect(blurEffect: UIBlurEffect(style: .systemMaterial), style: .tertiaryFill)
-
   private let overlay = UIView()
 
   internal let action: TLActionSheetAction
 
   private lazy var overlayEffectView: UIVisualEffectView! = {
-    UIVisualEffectView(effect: effect)
+    let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.actionSheetStyle)
+    if #available(iOS 13.0, *) {
+      let vibrancyEffect = UIVibrancyEffect(blurEffect: blurEffect, style: .tertiaryFill)
+      return UIVisualEffectView(effect: vibrancyEffect)
+    } else {
+      let blurEffect = UIBlurEffect(style: .extraLight)
+      let vibrancyEffect = UIVibrancyEffect(blurEffect: blurEffect)
+      let vibrancyEffectView = UIVisualEffectView(effect: vibrancyEffect)
+      vibrancyEffectView.backgroundColor = .white
+      return vibrancyEffectView
+    }
   }()
 
   required init?(coder: NSCoder) {
@@ -55,6 +63,12 @@ private class TLActionView: UIControl {
     overlayEffectView.translatesAutoresizingMaskIntoConstraints = false
 
     isUserInteractionEnabled = true
+
+    if #available(iOS 11.0, *) {
+
+    } else {
+      backgroundColor = .white
+    }
 
     label.font = (action.style == .cancel) ? .systemFont(ofSize: 20, weight: .semibold) : .systemFont(ofSize: 20)
     label.text = action.title
@@ -110,10 +124,10 @@ private class TLActionView: UIControl {
 }
 
 private class TLActionSeparatorView: UIView {
+  @available(iOS 13.0, *)
   lazy var visualEffectView: UIVisualEffectView = {
-    let blurEffect = UIBlurEffect(style: UIBlurEffect.Style(rawValue: 1200) ?? .dark)
+    let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.actionSheetStyle)
     let vibrancyEffect = UIVibrancyEffect(blurEffect: blurEffect, style: .separator)
-
     return UIVisualEffectView(effect: vibrancyEffect)
   }()
 
@@ -124,12 +138,16 @@ private class TLActionSeparatorView: UIView {
   override init(frame: CGRect) {
     super.init(frame: frame)
 
-    visualEffectView.translatesAutoresizingMaskIntoConstraints = false
-    visualEffectView.contentView.backgroundColor = .white
-    addSubview(visualEffectView)
+    if #available(iOS 13.0, *) {
+      visualEffectView.translatesAutoresizingMaskIntoConstraints = false
+      visualEffectView.contentView.backgroundColor = .white
+      addSubview(visualEffectView)
 
-    visualEffectView.heightAnchor.constraint(equalTo: self.heightAnchor).isActive = true
-    visualEffectView.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
+      visualEffectView.heightAnchor.constraint(equalTo: self.heightAnchor).isActive = true
+      visualEffectView.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
+    } else {
+      backgroundColor = UIColor(red: 0, green: 0, blue: 0.31, alpha: 0.05)
+    }
   }
 }
 
@@ -144,7 +162,7 @@ class TLActionGroupView: UIView {
 
   internal var header: UIView?
 
-  let backgroundEffect = UIBlurEffect(style: UIBlurEffect.Style(rawValue: 1200) ?? .dark)
+  let backgroundEffect = UIBlurEffect(style: UIBlurEffect.Style.actionSheetStyle)
 
   lazy var actionStackViewContainer: UIVisualEffectView! = {
     let visualEffectView = UIVisualEffectView(effect: self.backgroundEffect)
