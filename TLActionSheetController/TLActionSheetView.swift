@@ -13,29 +13,24 @@ internal class TLActionSheetView: UIView {
 
   private var headerView: UIView?
 
-  private var actionGroupView: TLActionGroupView? {
+  private (set) var hasActions = false
+
+  private lazy var actionGroupView: TLActionGroupView! = {
+    let actionGroupView = TLActionGroupView()
+
+    return actionGroupView
+  }()
+
+  private var cancelActionView: TLCancelActionView?
+
+  internal var cancelAction: TLActionSheetAction? {
     didSet {
-      guard let actionGroupView = self.actionGroupView else {
+      guard let cancelAction = self.cancelAction else {
         return
       }
-      actionGroupView.translatesAutoresizingMaskIntoConstraints = false
-      groupStack.insertArrangedSubview(actionGroupView, at: 0)
 
-      actionGroupView.leadingAnchor.constraint(equalTo: groupStack.leadingAnchor).isActive = true
-      actionGroupView.trailingAnchor.constraint(equalTo: groupStack.trailingAnchor).isActive = true
-    }
-  }
-
-  private var cancelActionGroupView: TLActionGroupView? {
-    didSet {
-      guard let cancelActionGroupView = self.cancelActionGroupView else {
-        return
-      }
-      cancelActionGroupView.translatesAutoresizingMaskIntoConstraints = false
-      groupStack.addArrangedSubview(cancelActionGroupView)
-
-      cancelActionGroupView.leadingAnchor.constraint(equalTo: groupStack.leadingAnchor).isActive = true
-      cancelActionGroupView.trailingAnchor.constraint(equalTo: groupStack.trailingAnchor).isActive = true
+      cancelActionView = TLCancelActionView(action: cancelAction)
+      cancelActionView?.isUserInteractionEnabled = false
     }
   }
 
@@ -64,49 +59,50 @@ internal class TLActionSheetView: UIView {
   }
 
   internal func prepareForDisplay() {
-    actionGroupView?.prepareForDisplay()
-    cancelActionGroupView?.prepareForDisplay()
+    if hasActions {
+      groupStack.addArrangedSubview(actionGroupView)
+      actionGroupView.translatesAutoresizingMaskIntoConstraints = false
+      actionGroupView.leadingAnchor.constraint(equalTo: groupStack.leadingAnchor).isActive = true
+      actionGroupView.trailingAnchor.constraint(equalTo: groupStack.trailingAnchor).isActive = true
+    }
+
+    if let cancelAction = self.cancelActionView {
+      groupStack.addArrangedSubview(cancelAction)
+
+      cancelAction.translatesAutoresizingMaskIntoConstraints = false
+      cancelAction.leadingAnchor.constraint(equalTo: groupStack.leadingAnchor).isActive = true
+      cancelAction.trailingAnchor.constraint(equalTo: groupStack.trailingAnchor).isActive = true
+      cancelAction.heightAnchor.constraint(equalToConstant: 57).isActive = true
+    }
   }
 
   func addAction(_ action: TLActionSheetAction) {
-    if action.style == .cancel {
-      if let cancelActionGroupView = self.cancelActionGroupView ?? TLActionGroupView() {
-        cancelActionGroupView.addAction(action)
-        self.cancelActionGroupView = cancelActionGroupView
-      }
-    } else {
-      if let actionGroupView = self.actionGroupView ?? TLActionGroupView() {
-        actionGroupView.addAction(action)
-        self.actionGroupView = actionGroupView
-      }
-    }
+    actionGroupView.addAction(action)
+    hasActions = true
   }
 
   func setHeader(_ header: UIView?) {
-    if let actionGroupView = self.actionGroupView ?? TLActionGroupView() {
-      actionGroupView.header = header
-      self.actionGroupView = actionGroupView
-    }
+//      actionGroupView.header = header
   }
 
   override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
     if let touch = touches.randomElement() {
-      actionGroupView?.handleTouchMoved(touch, with: event)
-      cancelActionGroupView?.handleTouchMoved(touch, with: event)
+      actionGroupView?.scrubbingMoved(touch, with: event)
+      cancelActionView?.scrubbingMoved(touch, with: event)
     }
   }
 
   override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
     if let touch = touches.randomElement() {
-      actionGroupView?.handleTouchBegan(touch, with: event)
-      cancelActionGroupView?.handleTouchBegan(touch, with: event)
+      actionGroupView?.scrubbingBegan(touch, with: event)
+      cancelActionView?.scrubbingBegan(touch, with: event)
     }
   }
 
   override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
     if let touch = touches.randomElement() {
-      actionGroupView?.handleTouchesEnded(touch, with: event)
-      cancelActionGroupView?.handleTouchesEnded(touch, with: event)
+      actionGroupView?.scrubbingEnded(touch, with: event)
+      cancelActionView?.scrubbingEnded(touch, with: event)
     }
   }
 }

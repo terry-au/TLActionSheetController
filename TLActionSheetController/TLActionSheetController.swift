@@ -124,9 +124,10 @@ class TLActionSheetController: UIViewController, UIViewControllerTransitioningDe
 
     if action.style == .cancel {
       cancelAction = action
+      actionView.cancelAction = action
+    } else {
+      actionView.addAction(action)
     }
-
-    actionView.addAction(action)
   }
 
   internal func invokeCancelAction() {

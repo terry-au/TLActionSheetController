@@ -11,8 +11,11 @@
 		CC13C2DE1AB4ED909DE922D3 /* TLActionGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC13C912EBBCA8FD89EE9E26 /* TLActionGroupView.swift */; };
 		CC13C4A305A967E3D0B31D4A /* TLActionSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC13CCC370E6A3300FDC3679 /* TLActionSheetView.swift */; };
 		CC13C57F9BD3F91E44CBA935 /* TLActionSheetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC13CB151621ECB3E2D40D5C /* TLActionSheetController.swift */; };
+		CC13C8BE3EED2E11EC281F7F /* TLActionVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC13CBE0E94FA7AD83E69354 /* TLActionVIew.swift */; };
 		CC13CB4273C0397F72FF1523 /* TLActionSheetHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC13C26A6B23D582E6F6248B /* TLActionSheetHeader.swift */; };
 		CC13CBBC62DB1BF1D9E8EF49 /* LICENCE.md in Sources */ = {isa = PBXBuildFile; fileRef = CC13C12A401CE4151DA10E60 /* LICENCE.md */; };
+		CC13CCD0918C43F121FBC3FE /* TLScrubInteraction.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC13CB446E11A1AF217A0079 /* TLScrubInteraction.swift */; };
+		CC13CCEFE7B992101B3C3C2A /* TLCancelActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC13C26832D24308D06C4E86 /* TLCancelActionView.swift */; };
 		CC13CD0ADED7DD3CC87401BA /* TLActionSheetAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC13C3C8BEB376B6AED6B7FA /* TLActionSheetAction.swift */; };
 		CC13CDCA544AC379F77E7B20 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = CC13C2CD2A1CDBB449CB6060 /* README.md */; };
 		CC13CFFCD0881C8EB2C0C1E2 /* Compatibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC13C0DB00B5224D3B5F2290 /* Compatibility.swift */; };
@@ -44,12 +47,15 @@
 /* Begin PBXFileReference section */
 		CC13C0DB00B5224D3B5F2290 /* Compatibility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Compatibility.swift; sourceTree = "<group>"; };
 		CC13C12A401CE4151DA10E60 /* LICENCE.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = LICENCE.md; sourceTree = "<group>"; };
+		CC13C26832D24308D06C4E86 /* TLCancelActionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TLCancelActionView.swift; sourceTree = "<group>"; };
 		CC13C26A6B23D582E6F6248B /* TLActionSheetHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TLActionSheetHeader.swift; sourceTree = "<group>"; };
 		CC13C2CD2A1CDBB449CB6060 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		CC13C3C8BEB376B6AED6B7FA /* TLActionSheetAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TLActionSheetAction.swift; sourceTree = "<group>"; };
 		CC13C912EBBCA8FD89EE9E26 /* TLActionGroupView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TLActionGroupView.swift; sourceTree = "<group>"; };
 		CC13CB151621ECB3E2D40D5C /* TLActionSheetController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TLActionSheetController.swift; sourceTree = "<group>"; };
+		CC13CB446E11A1AF217A0079 /* TLScrubInteraction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TLScrubInteraction.swift; sourceTree = "<group>"; };
 		CC13CBB092220B4940F2481C /* TLDimmedPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TLDimmedPresentationController.swift; sourceTree = "<group>"; };
+		CC13CBE0E94FA7AD83E69354 /* TLActionVIew.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TLActionVIew.swift; sourceTree = "<group>"; };
 		CC13CCC370E6A3300FDC3679 /* TLActionSheetView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TLActionSheetView.swift; sourceTree = "<group>"; };
 		CD5D4D9F252F0EAE00F109C6 /* TLActionSheetController.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TLActionSheetController.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD5D4DA2252F0EAE00F109C6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -127,6 +133,9 @@
 				CC13C912EBBCA8FD89EE9E26 /* TLActionGroupView.swift */,
 				CC13C26A6B23D582E6F6248B /* TLActionSheetHeader.swift */,
 				CC13C0DB00B5224D3B5F2290 /* Compatibility.swift */,
+				CC13C26832D24308D06C4E86 /* TLCancelActionView.swift */,
+				CC13CBE0E94FA7AD83E69354 /* TLActionVIew.swift */,
+				CC13CB446E11A1AF217A0079 /* TLScrubInteraction.swift */,
 			);
 			path = TLActionSheetController;
 			sourceTree = "<group>";
@@ -289,6 +298,9 @@
 				CC13CDCA544AC379F77E7B20 /* README.md in Sources */,
 				CC13CBBC62DB1BF1D9E8EF49 /* LICENCE.md in Sources */,
 				CC13CFFCD0881C8EB2C0C1E2 /* Compatibility.swift in Sources */,
+				CC13CCEFE7B992101B3C3C2A /* TLCancelActionView.swift in Sources */,
+				CC13C8BE3EED2E11EC281F7F /* TLActionVIew.swift in Sources */,
+				CC13CCD0918C43F121FBC3FE /* TLScrubInteraction.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -5,123 +5,6 @@
 import Foundation
 import UIKit
 
-private class TLActionView: UIControl {
-  private static let selectionFeedbackGenerator = UISelectionFeedbackGenerator()
-
-  private static let cancelBackgroundColour = UIColor.themed { collection in
-    if collection {
-      return UIColor(red: 0.173, green: 0.173, blue: 0.180, alpha: 1)
-    }
-
-    return UIColor.white
-  }
-
-  private static let labelColour = UIColor.themed { isDarkMode in
-    if isDarkMode {
-      return UIColor(red: 0.275, green: 0.576, blue: 1, alpha: 1)
-    }
-
-    return UIColor(red: 0, green: 0.478, blue: 1, alpha: 1)
-  }
-
-  private static let destructiveLabelColour = UIColor.themed { isDarkMode in
-    if isDarkMode {
-      return UIColor(red: 1, green: 0.271, blue: 0.227, alpha: 1)
-    }
-
-    return UIColor(red: 1, green: 0.231, blue: 0.188, alpha: 1)
-  }
-
-  private let label = UILabel()
-
-  private let overlay = UIView()
-
-  internal let action: TLActionSheetAction
-
-  private lazy var overlayEffectView: UIVisualEffectView! = {
-    let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.actionSheetStyle)
-    if #available(iOS 13.0, *) {
-      let vibrancyEffect = UIVibrancyEffect(blurEffect: blurEffect, style: .tertiaryFill)
-      return UIVisualEffectView(effect: vibrancyEffect)
-    } else {
-      let blurEffect = UIBlurEffect(style: .extraLight)
-      let vibrancyEffect = UIVibrancyEffect(blurEffect: blurEffect)
-      let vibrancyEffectView = UIVisualEffectView(effect: vibrancyEffect)
-      vibrancyEffectView.backgroundColor = .white
-      return vibrancyEffectView
-    }
-  }()
-
-  required init?(coder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
-  }
-
-  init(action: TLActionSheetAction) {
-    self.action = action
-    super.init(frame: .zero)
-
-    overlayEffectView.translatesAutoresizingMaskIntoConstraints = false
-
-    isUserInteractionEnabled = true
-
-    if #available(iOS 11.0, *) {
-
-    } else {
-      backgroundColor = .white
-    }
-
-    label.font = (action.style == .cancel) ? .systemFont(ofSize: 20, weight: .semibold) : .systemFont(ofSize: 20)
-    label.text = action.title
-    label.textColor = (action.style == .destructive) ? TLActionView.destructiveLabelColour : TLActionView.labelColour
-
-
-    if action.style == .cancel {
-      let cancelBgView = UIView()
-      cancelBgView.backgroundColor = TLActionView.cancelBackgroundColour
-      cancelBgView.translatesAutoresizingMaskIntoConstraints = false
-      addSubview(cancelBgView)
-
-      cancelBgView.topAnchor.constraint(equalTo: topAnchor).isActive = true
-      cancelBgView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
-      cancelBgView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-      cancelBgView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-    }
-
-    overlay.isHidden = true
-    overlay.backgroundColor = .white
-    overlay.translatesAutoresizingMaskIntoConstraints = false
-    overlayEffectView.contentView.addSubview(overlay)
-
-    addSubview(overlayEffectView)
-    addSubview(label)
-
-    label.translatesAutoresizingMaskIntoConstraints = false
-    label.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-    label.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-
-    overlay.topAnchor.constraint(equalTo: overlayEffectView.topAnchor).isActive = true
-    overlay.bottomAnchor.constraint(equalTo: overlayEffectView.bottomAnchor).isActive = true
-    overlay.leadingAnchor.constraint(equalTo: overlayEffectView.leadingAnchor).isActive = true
-    overlay.trailingAnchor.constraint(equalTo: overlayEffectView.trailingAnchor).isActive = true
-
-    overlayEffectView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-    overlayEffectView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
-    overlayEffectView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
-    overlayEffectView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
-  }
-
-  override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
-    self.frame.contains(point)
-  }
-
-  func setHighlighted(_ highlighted: Bool, impact: Bool = false) {
-    if impact && highlighted && self.isHighlighted != highlighted {
-      TLActionView.selectionFeedbackGenerator.selectionChanged()
-    }
-    overlay.isHidden = !highlighted
-    isHighlighted = highlighted
-  }
-}
 
 private class TLActionSeparatorView: UIView {
   @available(iOS 13.0, *)
@@ -151,21 +34,139 @@ private class TLActionSeparatorView: UIView {
   }
 }
 
+final class ContentSizedTableView: UITableView {
+  override var contentSize: CGSize {
+    didSet {
+      invalidateIntrinsicContentSize()
+    }
+  }
 
-class TLActionGroupView: UIView {
+  override var intrinsicContentSize: CGSize {
+    layoutIfNeeded()
+    return CGSize(width: UIView.noIntrinsicMetric, height: contentSize.height)
+  }
+}
 
-  let actionStackView = UIStackView()
+private class TLActionGroupViewCell: UITableViewCell, TLScrubInteraction {
+  private var actionViewBottomConstraint: NSLayoutConstraint!
+  private var separatorViewBottomConstraint: NSLayoutConstraint!
 
-  private var controlledViews = Set<TLActionView>()
+  private lazy var actionView: TLActionView! = {
+    let actionView = TLActionView()
+    actionView.translatesAutoresizingMaskIntoConstraints = false
+    contentView.addSubview(actionView)
+
+    actionView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
+    actionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
+    actionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
+    actionViewBottomConstraint = actionView.bottomAnchor.constraint(equalTo: bottomAnchor)
+
+    return actionView
+  }()
+
+  private lazy var separatorView: TLActionSeparatorView = {
+    let separatorView = TLActionSeparatorView()
+    separatorView.translatesAutoresizingMaskIntoConstraints = false
+    contentView.addSubview(separatorView)
+
+    separatorView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
+    separatorView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
+    separatorView.topAnchor.constraint(equalTo: actionView.bottomAnchor).isActive = true
+    separatorView.heightAnchor.constraint(equalToConstant: 1 / UIScreen.main.scale).isActive = true
+    separatorViewBottomConstraint = separatorView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+
+    return separatorView
+  }()
+
+  internal var isSeparatorHidden = false {
+    didSet {
+      if isSeparatorHidden {
+        separatorView.isHidden = true
+        separatorViewBottomConstraint.isActive = false
+        actionViewBottomConstraint.isActive = true
+      } else {
+        separatorView.isHidden = false
+        actionViewBottomConstraint.isActive = false
+        separatorViewBottomConstraint.isActive = true
+      }
+    }
+  }
+
+  required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+
+  override init(style: CellStyle, reuseIdentifier: String?) {
+    super.init(style: style, reuseIdentifier: reuseIdentifier)
+
+    backgroundColor = nil
+  }
+
+  func setAction(action: TLActionSheetAction) {
+    actionView.action = action
+    actionView.translatesAutoresizingMaskIntoConstraints = false
+    contentView.addSubview(actionView)
+  }
+
+  override func prepareForReuse() {
+    super.prepareForReuse()
+
+//    actionViewBottomConstraint.isActive = false
+//    separatorView.isHidden = false
+  }
+
+  func scrubbingMoved(_ touch: UITouch, with event: UIEvent?) {
+    if point(inside: touch.location(in: self), with: event) {
+      actionView.setHighlighted(true, impact: true)
+    } else {
+      actionView.setHighlighted(false)
+    }
+  }
+
+  func scrubbingBegan(_ touch: UITouch, with event: UIEvent?) {
+    if point(inside: touch.location(in: self), with: event) {
+      actionView.setHighlighted(true)
+    }
+  }
+
+  func scrubbingEnded(_ touch: UITouch, with event: UIEvent?) {
+    if point(inside: touch.location(in: self), with: event) {
+      actionView.action.invoke()
+    }
+    actionView.setHighlighted(false)
+  }
+}
+
+internal class TLActionGroupView: UIView, UITableViewDataSource, UITableViewDelegate, TLScrubInteraction {
+
+  private static let kActionCellIdentifier = "ActionCell"
+
+  @available(iOS 13.0, *)
+  lazy var separatorEffect: UIVisualEffect = {
+    let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.actionSheetStyle)
+    return UIVibrancyEffect(blurEffect: blurEffect, style: .separator)
+  }()
+
+  private lazy var tableView: UITableView = {
+    let tableView = ContentSizedTableView(frame: .zero)
+    tableView.translatesAutoresizingMaskIntoConstraints = false
+    tableView.dataSource = self
+    tableView.delegate = self
+    tableView.alwaysBounceVertical = false
+    tableView.backgroundColor = nil
+    tableView.rowHeight = 57
+    tableView.separatorStyle = .none
+    tableView.register(TLActionGroupViewCell.self, forCellReuseIdentifier: TLActionGroupView.kActionCellIdentifier)
+
+    return tableView
+  }()
 
   internal var actions: [TLActionSheetAction] = []
 
-  internal var header: UIView?
-
-  let backgroundEffect = UIBlurEffect(style: UIBlurEffect.Style.actionSheetStyle)
-
   lazy var actionStackViewContainer: UIVisualEffectView! = {
-    let visualEffectView = UIVisualEffectView(effect: self.backgroundEffect)
+    let backgroundEffect = UIBlurEffect(style: UIBlurEffect.Style.actionSheetStyle)
+    let visualEffectView = UIVisualEffectView(effect: backgroundEffect)
+    visualEffectView.translatesAutoresizingMaskIntoConstraints = false
 
     return visualEffectView
   }()
@@ -174,93 +175,104 @@ class TLActionGroupView: UIView {
     fatalError("init(coder:) has not been implemented")
   }
 
-  init() {
-    super.init(frame: .zero)
+  override init(frame: CGRect) {
+    super.init(frame: frame)
 
-    self.translatesAutoresizingMaskIntoConstraints = false
+    layer.cornerRadius = 13
+    clipsToBounds = true
 
-    actionStackView.translatesAutoresizingMaskIntoConstraints = false
-    actionStackView.axis = .vertical
-    actionStackView.alignment = .bottom
-    actionStackView.isUserInteractionEnabled = false
+    addSubview(actionStackViewContainer)
+    actionStackViewContainer.contentView.addSubview(tableView)
 
-    actionStackViewContainer.translatesAutoresizingMaskIntoConstraints = false
-    actionStackViewContainer.layer.cornerRadius = 13
-    actionStackViewContainer.clipsToBounds = true
+    actionStackViewContainer.topAnchor.constraint(equalTo: topAnchor).isActive = true
+    actionStackViewContainer.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+    actionStackViewContainer.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+    actionStackViewContainer.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
 
-    self.addSubview(actionStackViewContainer)
+    tableView.topAnchor.constraint(equalTo: actionStackViewContainer.topAnchor).isActive = true
+    tableView.bottomAnchor.constraint(equalTo: actionStackViewContainer.bottomAnchor).isActive = true
+    tableView.leadingAnchor.constraint(equalTo: actionStackViewContainer.leadingAnchor).isActive = true
+    tableView.trailingAnchor.constraint(equalTo: actionStackViewContainer.trailingAnchor).isActive = true
 
-    actionStackViewContainer.contentView.addSubview(actionStackView)
+    tableView.addObserver(self, forKeyPath: "contentSize", context: nil)
+  }
 
-    actionStackViewContainer.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
-    actionStackViewContainer.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
-    actionStackViewContainer.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
-    actionStackViewContainer.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-
-    actionStackView.leadingAnchor.constraint(equalTo: actionStackViewContainer.leadingAnchor).isActive = true
-    actionStackView.trailingAnchor.constraint(equalTo: actionStackViewContainer.trailingAnchor).isActive = true
-    actionStackView.bottomAnchor.constraint(equalTo: actionStackViewContainer.bottomAnchor).isActive = true
-    actionStackView.topAnchor.constraint(equalTo: actionStackViewContainer.topAnchor).isActive = true
+  override func observeValue(
+      forKeyPath keyPath: String?,
+      of object: Any?,
+      change: [NSKeyValueChangeKey: Any]?,
+      context: UnsafeMutableRawPointer?
+  ) {
+    if (object as? UITableView) === tableView && keyPath == "contentSize" {
+      /* If table is scrollable, enable user interaction. */
+      isUserInteractionEnabled = tableView.contentSize.height > tableView.bounds.height
+    } else {
+      super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
+    }
   }
 
   func addAction(_ action: TLActionSheetAction) {
     actions.append(action)
   }
 
-  internal func prepareForDisplay() {
-    if let header = self.header {
-      if let actionSheetHeader = header as? TLActionSheetHeader {
-        actionSheetHeader.setHasActionViewsBelow(actions.count > 0)
-      }
-      actionStackView.addArrangedSubview(header)
-      header.widthAnchor.constraint(equalTo: actionStackView.widthAnchor).isActive = true
-    }
-
-    for action in actions {
-      if actions.first !== action || header != nil {
-        addSeparator()
-      }
-
-      let actionView = TLActionView(action: action)
-      actionStackView.addArrangedSubview(actionView)
-      actionView.heightAnchor.constraint(equalToConstant: 57).isActive = true
-      actionView.widthAnchor.constraint(equalTo: actionStackView.widthAnchor).isActive = true
-      self.controlledViews.insert(actionView)
-    }
+  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    actions.count
   }
 
-  private func addSeparator() {
-    let separatorView = TLActionSeparatorView()
-    separatorView.translatesAutoresizingMaskIntoConstraints = false
-    actionStackView.addArrangedSubview(separatorView)
-    separatorView.heightAnchor.constraint(equalToConstant: 0.33).isActive = true
-    separatorView.widthAnchor.constraint(equalTo: actionStackView.widthAnchor).isActive = true
+  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    guard let cell = tableView.dequeueReusableCell(
+        withIdentifier: TLActionGroupView.kActionCellIdentifier,
+        for: indexPath
+    ) as? TLActionGroupViewCell else {
+      fatalError("invalid cell returned in TLACtionGroupView")
+    }
+
+    let action = actions[indexPath.row]
+    cell.setAction(action: action)
+    cell.isSeparatorHidden = indexPath.row == actions.count - 1
+
+    return cell
   }
 
-  internal func handleTouchMoved(_ touch: UITouch, with event: UIEvent?) {
-    for row in controlledViews {
-      if row.point(inside: touch.location(in: self), with: event) {
-        row.setHighlighted(true, impact: true)
-      } else {
-        row.setHighlighted(false)
+  func scrubbingMoved(_ touch: UITouch, with event: UIEvent?) {
+    guard let indexPathsForVisibleRows = tableView.indexPathsForVisibleRows else {
+      return
+    }
+
+    for indexPath in indexPathsForVisibleRows {
+      guard let cell = tableView.cellForRow(at: indexPath) as? TLActionGroupViewCell else {
+        continue
       }
+
+      cell.scrubbingMoved(touch, with: event)
     }
   }
 
-  internal func handleTouchBegan(_ touch: UITouch, with event: UIEvent?) {
-    for row in controlledViews {
-      if row.point(inside: touch.location(in: self), with: event) {
-        row.setHighlighted(true)
+  func scrubbingBegan(_ touch: UITouch, with event: UIEvent?) {
+    guard let indexPathsForVisibleRows = tableView.indexPathsForVisibleRows else {
+      return
+    }
+
+    for indexPath in indexPathsForVisibleRows {
+      guard let cell = tableView.cellForRow(at: indexPath) as? TLActionGroupViewCell else {
+        continue
       }
+
+      cell.scrubbingBegan(touch, with: event)
     }
   }
 
-  internal func handleTouchesEnded(_ touch: UITouch, with event: UIEvent?) {
-    for row in controlledViews {
-      if row.point(inside: touch.location(in: self), with: event) {
-        row.action.invoke()
+  func scrubbingEnded(_ touch: UITouch, with event: UIEvent?) {
+    guard let indexPathsForVisibleRows = tableView.indexPathsForVisibleRows else {
+      return
+    }
+
+    for indexPath in indexPathsForVisibleRows {
+      guard let cell = tableView.cellForRow(at: indexPath) as? TLActionGroupViewCell else {
+        continue
       }
-      row.setHighlighted(false)
+
+      cell.scrubbingEnded(touch, with: event)
     }
   }
 }
