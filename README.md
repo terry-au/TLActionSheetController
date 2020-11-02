@@ -9,13 +9,15 @@ It is not possible to adjust the colour of labels, add icons, add a custom heade
 This replacement aims to solve all of those issues, whilst maintain the same look and feel.
 
 ## Progress
-- [x] UIKit-style title/message header support.
+- [ ] UIKit-style title/message header support.
 - [x] Action support.
 - [x] Scrubbing (tap, drag between actions).
 - [x] Landscape/portrait orientations.
 - [x] Dimmed background presentation controller.
 - [x] Custom presentation/dismissal animations.
-- [x] Feature parity with UIAlertController's action sheet style.
+- [ ] Feature parity with UIAlertController's action sheet style.
+- [x] Scrolling.
+- [x] Portrait/landscape.
 - [ ] Customise action labels.
 - [ ] Icon support.
 - [ ] Custom header API.
