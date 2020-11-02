@@ -43,7 +43,7 @@ class ViewController: UIViewController {
     alertController.addAction(.init(title: "Destructive", style: .destructive))
     alertController.addAction(.init(title: "Cancel", style: .cancel))
 
-    self.present(alertController, animated: true)
+    present(alertController, animated: true)
   }
 
   @objc func openNew(sender: Any?) {
@@ -55,6 +55,12 @@ class ViewController: UIViewController {
     actionSheet.addAction(.init(title: "Normal", style: .default) { action in
       print("Normal tapped!")
     })
+    actionSheet.addAction(.init(title: "Bla", style: .default))
+    actionSheet.addAction(.init(title: "Bla", style: .default))
+    actionSheet.addAction(.init(title: "Bla", style: .default))
+    actionSheet.addAction(.init(title: "Bla", style: .default))
+    actionSheet.addAction(.init(title: "Bla", style: .default))
+    actionSheet.addAction(.init(title: "Bla", style: .default))
     actionSheet.addAction(.init(title: "Destructive", style: .destructive) { action in
       print("Destructive tapped!")
     })
@@ -62,7 +68,7 @@ class ViewController: UIViewController {
       print("Cancel tapped!")
     })
 
-    self.present(actionSheet, animated: true)
+    present(actionSheet, animated: true)
   }
 }
 

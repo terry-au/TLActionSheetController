@@ -28,8 +28,8 @@ private class TLDimmedPresentationController: UIPresentationController, UIViewCo
 
     containerView.backgroundColor = .clear
 
-    transitionCoordinator.animate(alongsideTransition: { [weak self] context in
-      containerView.backgroundColor = UIColor.themed { isDarkMode in
+    transitionCoordinator.animate(alongsideTransition: { context in
+      context.containerView.backgroundColor = UIColor.themed { isDarkMode in
         if isDarkMode {
           return UIColor.black.withAlphaComponent(0.48)
         }
@@ -45,13 +45,12 @@ private class TLDimmedPresentationController: UIPresentationController, UIViewCo
   }
 
   override func dismissalTransitionWillBegin() {
-    guard let containerView = containerView,
-          let transitionCoordinator = presentingViewController.transitionCoordinator else {
+    guard let transitionCoordinator = presentingViewController.transitionCoordinator else {
       return
     }
 
-    transitionCoordinator.animate(alongsideTransition: { [weak self] context in
-      containerView.backgroundColor = .clear
+    transitionCoordinator.animate(alongsideTransition: { context in
+      context.containerView.backgroundColor = .clear
     }, completion: nil)
   }
 
@@ -98,7 +97,6 @@ private class TLTransitionAnimator: NSObject, UIViewControllerAnimatedTransition
     actionController.view.setNeedsLayout()
     actionController.view.layoutIfNeeded()
 
-
     let offset = containerView.safeAreaInsets.bottom
 
     if presenting {
@@ -110,13 +108,13 @@ private class TLTransitionAnimator: NSObject, UIViewControllerAnimatedTransition
     }
 
     UIView.animate(
-        withDuration: 0.404,
+        withDuration: animationDuration,
         delay: 0,
         usingSpringWithDamping: 600,
         initialSpringVelocity: 0,
         options: [.beginFromCurrentState, .allowUserInteraction],
         animations: {
-          if self.presenting {
+          if presenting {
             toViewController.view.transform = CGAffineTransform.identity
           } else {
             fromViewController.view.transform = CGAffineTransform(

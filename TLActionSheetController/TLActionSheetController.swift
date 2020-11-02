@@ -9,14 +9,15 @@ class TLActionSheetController: UIViewController, UIViewControllerTransitioningDe
   private var detailsTransitioningDelegate = TLDimmedModalTransitioningDelegate()
   private var cancelAction: TLActionSheetAction?
   private var landscapeWidthAnchor: NSLayoutConstraint?
-  private var header: TLActionSheetHeader?
+  public var header: TLActionSheetHeader?
 
-  private lazy var contentView: UIView! = {
+  lazy var contentView: UIView! = {
     actionView
   }()
 
   private lazy var actionView: TLActionSheetView! = {
     let actionView = TLActionSheetView(actionController: self)
+    actionView.translatesAutoresizingMaskIntoConstraints = false
     actionView.controller = self
 
     return actionView
@@ -25,8 +26,8 @@ class TLActionSheetController: UIViewController, UIViewControllerTransitioningDe
   init() {
     super.init(nibName: nil, bundle: nil)
 
-    self.modalPresentationStyle = .custom
-    self.transitioningDelegate = detailsTransitioningDelegate
+    modalPresentationStyle = .custom
+    transitioningDelegate = detailsTransitioningDelegate
 
     contentView.translatesAutoresizingMaskIntoConstraints = false
   }
@@ -63,6 +64,7 @@ class TLActionSheetController: UIViewController, UIViewControllerTransitioningDe
     }()
 
     header = TLActionSheetHeader(title: titleAttributedString, message: messageAttributedString)
+    header?.translatesAutoresizingMaskIntoConstraints = false
   }
 
   required init?(coder: NSCoder) {

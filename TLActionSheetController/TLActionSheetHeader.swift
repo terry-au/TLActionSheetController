@@ -33,8 +33,6 @@ class TLActionSheetHeader: UIView {
   init(title: NSAttributedString?, message: NSAttributedString?) {
     super.init(frame: .zero)
 
-    self.translatesAutoresizingMaskIntoConstraints = false
-
     if let visualEffectView = self.visualEffectView as? UIVisualEffectView {
       visualEffectView.contentView.addSubview(stackView)
       visualEffectView.contentView.addSubview(titleLabel)

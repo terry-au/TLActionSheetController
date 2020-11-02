@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CC13C0DC0ECA066FE91CBD4C /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = CC13CD7A5B42534ED1BAEBDB /* .swiftlint.yml */; };
 		CC13C2BA656B47822CBBFB90 /* TLDimmedPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC13CBB092220B4940F2481C /* TLDimmedPresentationController.swift */; };
 		CC13C2DE1AB4ED909DE922D3 /* TLActionGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC13C912EBBCA8FD89EE9E26 /* TLActionGroupView.swift */; };
 		CC13C4A305A967E3D0B31D4A /* TLActionSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC13CCC370E6A3300FDC3679 /* TLActionSheetView.swift */; };
@@ -57,6 +58,7 @@
 		CC13CBB092220B4940F2481C /* TLDimmedPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TLDimmedPresentationController.swift; sourceTree = "<group>"; };
 		CC13CBE0E94FA7AD83E69354 /* TLActionVIew.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TLActionVIew.swift; sourceTree = "<group>"; };
 		CC13CCC370E6A3300FDC3679 /* TLActionSheetView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TLActionSheetView.swift; sourceTree = "<group>"; };
+		CC13CD7A5B42534ED1BAEBDB /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = file.swiftlint; path = .swiftlint.yml; sourceTree = "<group>"; };
 		CD5D4D9F252F0EAE00F109C6 /* TLActionSheetController.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TLActionSheetController.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD5D4DA2252F0EAE00F109C6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CD5D4DA6252F0EAE00F109C6 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -105,6 +107,7 @@
 				CD5D4DA0252F0EAE00F109C6 /* Products */,
 				CC13C2CD2A1CDBB449CB6060 /* README.md */,
 				CC13C12A401CE4151DA10E60 /* LICENCE.md */,
+				CC13CD7A5B42534ED1BAEBDB /* .swiftlint.yml */,
 			);
 			sourceTree = "<group>";
 		};
@@ -263,6 +266,7 @@
 			files = (
 				CD5D4DAF252F0EAE00F109C6 /* LaunchScreen.storyboard in Resources */,
 				CD5D4DAC252F0EAE00F109C6 /* Assets.xcassets in Resources */,
+				CC13C0DC0ECA066FE91CBD4C /* .swiftlint.yml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

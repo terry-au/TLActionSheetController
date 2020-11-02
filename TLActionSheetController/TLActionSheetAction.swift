@@ -15,10 +15,8 @@ public class TLActionSheetAction {
   }
 
   open var title: String?
-
   open var isEnabled: Bool
-
-  let style: Style
+  open var style: Style
 
   private var handler: ((TLActionSheetAction) -> Void)?
 

@@ -8,7 +8,7 @@ import UIKit
 
 private class TLActionSeparatorView: UIView {
   @available(iOS 13.0, *)
-  lazy var visualEffectView: UIVisualEffectView = {
+  private lazy var visualEffectView: UIVisualEffectView = {
     let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.actionSheetStyle)
     let vibrancyEffect = UIVibrancyEffect(blurEffect: blurEffect, style: .separator)
     return UIVisualEffectView(effect: vibrancyEffect)
@@ -26,8 +26,8 @@ private class TLActionSeparatorView: UIView {
       visualEffectView.contentView.backgroundColor = .white
       addSubview(visualEffectView)
 
-      visualEffectView.heightAnchor.constraint(equalTo: self.heightAnchor).isActive = true
-      visualEffectView.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
+      visualEffectView.heightAnchor.constraint(equalTo: heightAnchor).isActive = true
+      visualEffectView.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
     } else {
       backgroundColor = UIColor(red: 0, green: 0, blue: 0.31, alpha: 0.05)
     }
@@ -72,7 +72,7 @@ private class TLActionGroupViewCell: UITableViewCell, TLScrubInteraction {
     separatorView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
     separatorView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
     separatorView.topAnchor.constraint(equalTo: actionView.bottomAnchor).isActive = true
-    separatorView.heightAnchor.constraint(equalToConstant: 1 / UIScreen.main.scale).isActive = true
+    separatorView.heightAnchor.constraint(equalToConstant: 3 / UIScreen.main.scale).isActive = true
     separatorViewBottomConstraint = separatorView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
 
     return separatorView
@@ -141,8 +141,12 @@ internal class TLActionGroupView: UIView, UITableViewDataSource, UITableViewDele
 
   private static let kActionCellIdentifier = "ActionCell"
 
+  private var actions: [TLActionSheetAction] = []
+
+  private var tableContentSizeObserver: NSKeyValueObservation!
+
   @available(iOS 13.0, *)
-  lazy var separatorEffect: UIVisualEffect = {
+  private lazy var separatorEffect: UIVisualEffect = {
     let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.actionSheetStyle)
     return UIVibrancyEffect(blurEffect: blurEffect, style: .separator)
   }()
@@ -158,12 +162,15 @@ internal class TLActionGroupView: UIView, UITableViewDataSource, UITableViewDele
     tableView.separatorStyle = .none
     tableView.register(TLActionGroupViewCell.self, forCellReuseIdentifier: TLActionGroupView.kActionCellIdentifier)
 
+    tableContentSizeObserver = tableView.observe(\.contentSize) { [unowned self] responder, change in
+      /* If table is scrollable, enable user interaction. */
+      self.isUserInteractionEnabled = responder.contentSize.height > responder.bounds.height
+    }
+
     return tableView
   }()
 
-  internal var actions: [TLActionSheetAction] = []
-
-  lazy var actionStackViewContainer: UIVisualEffectView! = {
+  private lazy var actionStackViewContainer: UIVisualEffectView! = {
     let backgroundEffect = UIBlurEffect(style: UIBlurEffect.Style.actionSheetStyle)
     let visualEffectView = UIVisualEffectView(effect: backgroundEffect)
     visualEffectView.translatesAutoresizingMaskIntoConstraints = false
@@ -193,8 +200,6 @@ internal class TLActionGroupView: UIView, UITableViewDataSource, UITableViewDele
     tableView.bottomAnchor.constraint(equalTo: actionStackViewContainer.bottomAnchor).isActive = true
     tableView.leadingAnchor.constraint(equalTo: actionStackViewContainer.leadingAnchor).isActive = true
     tableView.trailingAnchor.constraint(equalTo: actionStackViewContainer.trailingAnchor).isActive = true
-
-    tableView.addObserver(self, forKeyPath: "contentSize", context: nil)
   }
 
   override func observeValue(
@@ -204,8 +209,7 @@ internal class TLActionGroupView: UIView, UITableViewDataSource, UITableViewDele
       context: UnsafeMutableRawPointer?
   ) {
     if (object as? UITableView) === tableView && keyPath == "contentSize" {
-      /* If table is scrollable, enable user interaction. */
-      isUserInteractionEnabled = tableView.contentSize.height > tableView.bounds.height
+
     } else {
       super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
     }

@@ -8,7 +8,7 @@ import UIKit
 internal class TLCancelActionView: UIView, TLScrubInteraction {
   let action: TLActionSheetAction
 
-  let actionView: TLActionView
+  private let actionView: TLActionView
 
   required init?(coder: NSCoder) {
     fatalError()

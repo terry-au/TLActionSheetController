@@ -38,7 +38,6 @@ internal class TLActionSheetView: UIView {
     super.init(frame: .zero)
 
     isUserInteractionEnabled = true
-    translatesAutoresizingMaskIntoConstraints = false
 
     groupStack.translatesAutoresizingMaskIntoConstraints = false
     groupStack.spacing = 8
