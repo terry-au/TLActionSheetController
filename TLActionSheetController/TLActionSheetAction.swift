@@ -18,7 +18,7 @@ public class TLActionSheetAction {
 
   open var isEnabled: Bool
 
-  var style: Style
+  let style: Style
 
   private var handler: ((TLActionSheetAction) -> Void)?
 

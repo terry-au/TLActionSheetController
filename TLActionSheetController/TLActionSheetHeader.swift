@@ -7,15 +7,11 @@ import UIKit
 
 class TLActionSheetHeader: UIView {
   private static let padding: CGFloat = 14.666
-
   private static let interLabelSpacing: CGFloat = 12.333
-
   private static let extendedPadding: CGFloat = 24.666
 
   private let titleLabel = UILabel()
-
   private let messageLabel = UILabel()
-
   private let stackView = UIStackView()
 
   internal var bottomConstraint: NSLayoutConstraint?

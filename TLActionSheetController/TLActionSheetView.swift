@@ -7,22 +7,18 @@ import UIKit
 
 internal class TLActionSheetView: UIView {
 
-  internal weak var controller: TLActionSheetController?
-
-  internal let groupStack = UIStackView()
-
   private var headerView: UIView?
-
   private (set) var hasActions = false
-
+  private var cancelActionView: TLCancelActionView?
+  private var actions: [TLActionSheetAction] = []
   private lazy var actionGroupView: TLActionGroupView! = {
     let actionGroupView = TLActionGroupView()
 
     return actionGroupView
   }()
 
-  private var cancelActionView: TLCancelActionView?
-
+  internal weak var controller: TLActionSheetController?
+  internal let groupStack = UIStackView()
   internal var cancelAction: TLActionSheetAction? {
     didSet {
       guard let cancelAction = self.cancelAction else {
@@ -33,8 +29,6 @@ internal class TLActionSheetView: UIView {
       cancelActionView?.isUserInteractionEnabled = false
     }
   }
-
-  private var actions: [TLActionSheetAction] = []
 
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")

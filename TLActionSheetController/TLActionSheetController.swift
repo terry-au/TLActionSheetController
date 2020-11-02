@@ -7,18 +7,15 @@ import UIKit
 
 class TLActionSheetController: UIViewController, UIViewControllerTransitioningDelegate {
   private var detailsTransitioningDelegate = TLDimmedModalTransitioningDelegate()
-
   private var cancelAction: TLActionSheetAction?
-
   private var landscapeWidthAnchor: NSLayoutConstraint?
-
   private var header: TLActionSheetHeader?
 
-  lazy var contentView: UIView! = {
+  private lazy var contentView: UIView! = {
     actionView
   }()
 
-  lazy private var actionView: TLActionSheetView! = {
+  private lazy var actionView: TLActionSheetView! = {
     let actionView = TLActionSheetView(actionController: self)
     actionView.controller = self
 
