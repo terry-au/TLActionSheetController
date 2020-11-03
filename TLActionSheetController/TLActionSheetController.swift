@@ -6,9 +6,11 @@ import Foundation
 import UIKit
 
 class TLActionSheetController: UIViewController, UIViewControllerTransitioningDelegate {
+  private static let kTopAnchorOffset: CGFloat = 44
   private var detailsTransitioningDelegate = TLDimmedModalTransitioningDelegate()
   private var cancelAction: TLActionSheetAction?
-  private var landscapeWidthAnchor: NSLayoutConstraint?
+  private var landscapeWidthAnchor: NSLayoutConstraint!
+  private var topAnchor: NSLayoutConstraint!
   public var header: TLActionSheetHeaderView?
 
   lazy var contentView: UIView! = {
@@ -80,7 +82,8 @@ class TLActionSheetController: UIViewController, UIViewControllerTransitioningDe
     actionView.prepareForDisplay()
 
     contentView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
-    contentView.topAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+    topAnchor = contentView.topAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.topAnchor)
+    topAnchor.isActive = true
 
     let leftPortraitAnchor = contentView.leftAnchor.constraint(lessThanOrEqualTo: view.leftAnchor, constant: 8)
     leftPortraitAnchor.priority = .defaultHigh
@@ -95,16 +98,18 @@ class TLActionSheetController: UIViewController, UIViewControllerTransitioningDe
     landscapeCentreXAnchor.isActive = true
 
     landscapeWidthAnchor = contentView.widthAnchor.constraint(equalToConstant: 287)
-    landscapeWidthAnchor?.priority = .required
+    landscapeWidthAnchor.priority = .required
 
     updateContentWidthAnchors(for: traitCollection)
   }
 
   func updateContentWidthAnchors(`for` traitCollection: UITraitCollection) {
     if traitCollection.horizontalSizeClass == .compact && traitCollection.verticalSizeClass == .compact {
-      landscapeWidthAnchor?.isActive = true
+      landscapeWidthAnchor.isActive = true
+      topAnchor.constant = 0
     } else {
-      landscapeWidthAnchor?.isActive = false
+      landscapeWidthAnchor.isActive = false
+      topAnchor.constant = TLActionSheetController.kTopAnchorOffset
     }
   }
 
