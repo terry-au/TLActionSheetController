@@ -149,11 +149,17 @@ internal class TLActionGroupView: UIView, UITableViewDataSource, UITableViewDele
       }
 
       if let header = header {
-        addSubview(header)
-        addSubview(headerSeparator)
+        containerView.contentView.addSubview(header)
+        containerView.contentView.addSubview(headerSeparator)
       }
 
-      updateConstraints()
+      updateLayout()
+    }
+  }
+
+  internal var hasActions: Bool {
+    get {
+      !actions.isEmpty
     }
   }
 
@@ -210,44 +216,92 @@ internal class TLActionGroupView: UIView, UITableViewDataSource, UITableViewDele
     headerSeparator.translatesAutoresizingMaskIntoConstraints = false
 
     addSubview(containerView)
-    containerView.contentView.addSubview(tableView)
 
     containerView.topAnchor.constraint(equalTo: topAnchor).isActive = true
     containerView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
     containerView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
     containerView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
 
-    tableView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor).isActive = true
-    tableView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor).isActive = true
-    tableView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor).isActive = true
     tableView.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
   }
 
-  override func updateConstraints() {
-    super.updateConstraints()
-
+  private func updateLayout() {
+    /* Invalidate old constraints. */
     NSLayoutConstraint.deactivate(dynamicConstraints)
-    if let header = header {
-      dynamicConstraints = [
-        tableView.topAnchor.constraint(equalTo: header.bottomAnchor),
-        header.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
-        header.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
-        header.topAnchor.constraint(equalTo: containerView.topAnchor),
+    dynamicConstraints = []
 
+    let hasTableView = actions.count > 0
+    let hasHeader = header != nil
+
+    if hasTableView {
+      containerView.contentView.addSubview(tableView)
+    } else {
+      tableView.removeFromSuperview()
+    }
+
+    print(containerView.superview)
+    dynamicConstraints.append(contentsOf: updateTableConstraints(hasHeader: hasHeader))
+    dynamicConstraints.append(contentsOf: updateHeaderConstraints(hasTableView: hasTableView))
+
+    print(dynamicConstraints!)
+
+    NSLayoutConstraint.activate(dynamicConstraints)
+
+    setNeedsUpdateConstraints()
+  }
+
+  private func updateTableConstraints(hasHeader: Bool) -> [NSLayoutConstraint] {
+    guard tableView.superview === containerView.contentView else {
+      return []
+    }
+
+    var constraints = [
+      tableView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
+      tableView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+      tableView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor)
+    ]
+
+    if !hasHeader {
+      constraints.append(tableView.topAnchor.constraint(equalTo: containerView.topAnchor))
+    }
+
+    return constraints
+  }
+
+  private func updateHeaderConstraints(hasTableView: Bool) -> [NSLayoutConstraint] {
+    guard let header = self.header else {
+      return []
+    }
+
+    var constraints = [
+      header.topAnchor.constraint(equalTo: containerView.topAnchor),
+      header.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+      header.trailingAnchor.constraint(equalTo: containerView.trailingAnchor)
+    ]
+
+    if hasTableView {
+      constraints.append(contentsOf: [
+        header.bottomAnchor.constraint(equalTo: tableView.topAnchor),
         headerSeparator.heightAnchor.constraint(equalToConstant: 1 / UIScreen.main.scale),
         headerSeparator.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
         headerSeparator.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
-        headerSeparator.topAnchor.constraint(equalTo: header.bottomAnchor),
-      ]
+        headerSeparator.topAnchor.constraint(equalTo: header.bottomAnchor)
+      ])
     } else {
-      dynamicConstraints = [tableView.topAnchor.constraint(equalTo: containerView.topAnchor)]
+      constraints.append(header.bottomAnchor.constraint(equalTo: containerView.bottomAnchor))
     }
 
-    NSLayoutConstraint.activate(dynamicConstraints)
+    return constraints
   }
 
   func addAction(_ action: TLActionSheetAction) {
+    let needsUpdate = actions.isEmpty
+
     actions.append(action)
+
+    if needsUpdate {
+      updateLayout()
+    }
   }
 
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

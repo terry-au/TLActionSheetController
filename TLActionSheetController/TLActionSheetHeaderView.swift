@@ -5,7 +5,7 @@
 import Foundation
 import UIKit
 
-class TLActionSheetHeader: UIView {
+class TLActionSheetHeaderView: UIView {
   private static let padding: CGFloat = 14.666
   private static let interLabelSpacing: CGFloat = 12.333
   private static let extendedPadding: CGFloat = 24.666
@@ -56,7 +56,7 @@ class TLActionSheetHeader: UIView {
     messageLabel.textAlignment = .center
     stackView.addArrangedSubview(messageLabel)
 
-    stackView.spacing = TLActionSheetHeader.interLabelSpacing
+    stackView.spacing = TLActionSheetHeaderView.interLabelSpacing
     stackView.axis = .vertical
 
     visualEffectView.translatesAutoresizingMaskIntoConstraints = false
@@ -64,15 +64,15 @@ class TLActionSheetHeader: UIView {
     titleLabel.translatesAutoresizingMaskIntoConstraints = false
     messageLabel.translatesAutoresizingMaskIntoConstraints = false
 
-    visualEffectView.topAnchor.constraint(equalTo: topAnchor, constant: TLActionSheetHeader.padding).isActive = true
-    visualEffectView.leftAnchor.constraint(equalTo: leftAnchor, constant: TLActionSheetHeader.padding).isActive = true
+    visualEffectView.topAnchor.constraint(equalTo: topAnchor, constant: TLActionSheetHeaderView.padding).isActive = true
+    visualEffectView.leftAnchor.constraint(equalTo: leftAnchor, constant: TLActionSheetHeaderView.padding).isActive = true
     visualEffectView.rightAnchor.constraint(
         equalTo: rightAnchor,
-        constant: -TLActionSheetHeader.padding
+        constant: -TLActionSheetHeaderView.padding
     ).isActive = true
     bottomConstraint = visualEffectView.bottomAnchor.constraint(
         equalTo: bottomAnchor,
-        constant: -TLActionSheetHeader.padding
+        constant: -TLActionSheetHeaderView.padding
     )
     bottomConstraint?.isActive = true
 
@@ -89,7 +89,8 @@ class TLActionSheetHeader: UIView {
   }
 
   func setHasActionViewsBelow(_ hasViewBelow: Bool) {
-    bottomConstraint?.constant = hasViewBelow ? -TLActionSheetHeader.extendedPadding : -TLActionSheetHeader.padding
+    bottomConstraint?.constant = hasViewBelow ? -TLActionSheetHeaderView.extendedPadding : -TLActionSheetHeaderView.padding
+    setNeedsUpdateConstraints()
   }
 
   private func setTitleLabelText(attributedString: NSAttributedString?) {

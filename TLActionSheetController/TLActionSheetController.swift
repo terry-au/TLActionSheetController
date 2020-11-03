@@ -9,7 +9,7 @@ class TLActionSheetController: UIViewController, UIViewControllerTransitioningDe
   private var detailsTransitioningDelegate = TLDimmedModalTransitioningDelegate()
   private var cancelAction: TLActionSheetAction?
   private var landscapeWidthAnchor: NSLayoutConstraint?
-  public var header: TLActionSheetHeader?
+  public var header: TLActionSheetHeaderView?
 
   lazy var contentView: UIView! = {
     actionView
@@ -63,7 +63,7 @@ class TLActionSheetController: UIViewController, UIViewControllerTransitioningDe
       return nil
     }()
 
-    let header = TLActionSheetHeader(title: titleAttributedString, message: messageAttributedString)
+    let header = TLActionSheetHeaderView(title: titleAttributedString, message: messageAttributedString)
     header.translatesAutoresizingMaskIntoConstraints = false
     actionView.setHeader(header)
   }

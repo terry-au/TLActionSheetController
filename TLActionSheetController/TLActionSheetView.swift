@@ -7,16 +7,6 @@ import UIKit
 
 internal class TLActionSheetView: UIView {
 
-  private var headerView: UIView?
-  private (set) var hasActions = false
-  private var cancelActionView: TLCancelActionView?
-  private var actions: [TLActionSheetAction] = []
-  private lazy var actionGroupView: TLActionGroupView! = {
-    let actionGroupView = TLActionGroupView()
-
-    return actionGroupView
-  }()
-
   internal weak var controller: TLActionSheetController?
   internal let groupStack = UIStackView()
   internal var cancelAction: TLActionSheetAction? {
@@ -29,6 +19,14 @@ internal class TLActionSheetView: UIView {
       cancelActionView?.isUserInteractionEnabled = false
     }
   }
+
+  private var cancelActionView: TLCancelActionView?
+  private var actions: [TLActionSheetAction] = []
+  private lazy var actionGroupView: TLActionGroupView! = {
+    let actionGroupView = TLActionGroupView()
+
+    return actionGroupView
+  }()
 
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
@@ -52,7 +50,11 @@ internal class TLActionSheetView: UIView {
   }
 
   internal func prepareForDisplay() {
-    if hasActions {
+    if let header = actionGroupView.header as? TLActionSheetHeaderView {
+      header.setHasActionViewsBelow(actionGroupView.hasActions)
+    }
+
+    if actionGroupView.hasActions || actionGroupView.header != nil {
       groupStack.addArrangedSubview(actionGroupView)
       actionGroupView.translatesAutoresizingMaskIntoConstraints = false
       actionGroupView.leadingAnchor.constraint(equalTo: groupStack.leadingAnchor).isActive = true
@@ -71,7 +73,6 @@ internal class TLActionSheetView: UIView {
 
   func addAction(_ action: TLActionSheetAction) {
     actionGroupView.addAction(action)
-    hasActions = true
   }
 
   func setHeader(_ header: UIView?) {
