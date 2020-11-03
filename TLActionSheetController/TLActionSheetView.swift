@@ -75,7 +75,7 @@ internal class TLActionSheetView: UIView {
   }
 
   func setHeader(_ header: UIView?) {
-//      actionGroupView.header = header
+    actionGroupView.header = header
   }
 
   override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {

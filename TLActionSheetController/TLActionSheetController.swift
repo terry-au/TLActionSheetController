@@ -63,8 +63,9 @@ class TLActionSheetController: UIViewController, UIViewControllerTransitioningDe
       return nil
     }()
 
-    header = TLActionSheetHeader(title: titleAttributedString, message: messageAttributedString)
-    header?.translatesAutoresizingMaskIntoConstraints = false
+    let header = TLActionSheetHeader(title: titleAttributedString, message: messageAttributedString)
+    header.translatesAutoresizingMaskIntoConstraints = false
+    actionView.setHeader(header)
   }
 
   required init?(coder: NSCoder) {
@@ -76,7 +77,6 @@ class TLActionSheetController: UIViewController, UIViewControllerTransitioningDe
 
     view.addSubview(actionView)
 
-    actionView.setHeader(header)
     actionView.prepareForDisplay()
 
     contentView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true

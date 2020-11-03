@@ -114,7 +114,7 @@ private class TLTransitionAnimator: NSObject, UIViewControllerAnimatedTransition
         initialSpringVelocity: 0,
         options: [.beginFromCurrentState, .allowUserInteraction],
         animations: {
-          if presenting {
+          if self.presenting {
             toViewController.view.transform = CGAffineTransform.identity
           } else {
             fromViewController.view.transform = CGAffineTransform(

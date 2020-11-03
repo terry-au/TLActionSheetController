@@ -72,7 +72,7 @@ private class TLActionGroupViewCell: UITableViewCell, TLScrubInteraction {
     separatorView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
     separatorView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
     separatorView.topAnchor.constraint(equalTo: actionView.bottomAnchor).isActive = true
-    separatorView.heightAnchor.constraint(equalToConstant: 3 / UIScreen.main.scale).isActive = true
+    separatorView.heightAnchor.constraint(equalToConstant: 1 / UIScreen.main.scale).isActive = true
     separatorViewBottomConstraint = separatorView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
 
     return separatorView
@@ -141,9 +141,26 @@ internal class TLActionGroupView: UIView, UITableViewDataSource, UITableViewDele
 
   private static let kActionCellIdentifier = "ActionCell"
 
-  private var actions: [TLActionSheetAction] = []
+  var header: UIView? {
+    didSet {
+      if let oldHeader = oldValue {
+        oldHeader.removeFromSuperview()
+        headerSeparator.removeFromSuperview()
+      }
 
+      if let header = header {
+        addSubview(header)
+        addSubview(headerSeparator)
+      }
+
+      updateConstraints()
+    }
+  }
+
+  private var actions: [TLActionSheetAction] = []
   private var tableContentSizeObserver: NSKeyValueObservation!
+  private let headerSeparator = TLActionSeparatorView()
+  private var dynamicConstraints: [NSLayoutConstraint]! = []
 
   @available(iOS 13.0, *)
   private lazy var separatorEffect: UIVisualEffect = {
@@ -163,14 +180,16 @@ internal class TLActionGroupView: UIView, UITableViewDataSource, UITableViewDele
     tableView.register(TLActionGroupViewCell.self, forCellReuseIdentifier: TLActionGroupView.kActionCellIdentifier)
 
     tableContentSizeObserver = tableView.observe(\.contentSize) { [unowned self] responder, change in
-      /* If table is scrollable, enable user interaction. */
-      self.isUserInteractionEnabled = responder.contentSize.height > responder.bounds.height
+      /* If table is scrollable, enable user interaction and show scrollbars. */
+      let scrollingEnabled = responder.contentSize.height > responder.bounds.height
+      self.isUserInteractionEnabled = scrollingEnabled
+      tableView.showsVerticalScrollIndicator = scrollingEnabled
     }
 
     return tableView
   }()
 
-  private lazy var actionStackViewContainer: UIVisualEffectView! = {
+  private lazy var containerView: UIVisualEffectView! = {
     let backgroundEffect = UIBlurEffect(style: UIBlurEffect.Style.actionSheetStyle)
     let visualEffectView = UIVisualEffectView(effect: backgroundEffect)
     visualEffectView.translatesAutoresizingMaskIntoConstraints = false
@@ -188,31 +207,43 @@ internal class TLActionGroupView: UIView, UITableViewDataSource, UITableViewDele
     layer.cornerRadius = 13
     clipsToBounds = true
 
-    addSubview(actionStackViewContainer)
-    actionStackViewContainer.contentView.addSubview(tableView)
+    headerSeparator.translatesAutoresizingMaskIntoConstraints = false
 
-    actionStackViewContainer.topAnchor.constraint(equalTo: topAnchor).isActive = true
-    actionStackViewContainer.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
-    actionStackViewContainer.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-    actionStackViewContainer.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+    addSubview(containerView)
+    containerView.contentView.addSubview(tableView)
 
-    tableView.topAnchor.constraint(equalTo: actionStackViewContainer.topAnchor).isActive = true
-    tableView.bottomAnchor.constraint(equalTo: actionStackViewContainer.bottomAnchor).isActive = true
-    tableView.leadingAnchor.constraint(equalTo: actionStackViewContainer.leadingAnchor).isActive = true
-    tableView.trailingAnchor.constraint(equalTo: actionStackViewContainer.trailingAnchor).isActive = true
+    containerView.topAnchor.constraint(equalTo: topAnchor).isActive = true
+    containerView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+    containerView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+    containerView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+
+    tableView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor).isActive = true
+    tableView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor).isActive = true
+    tableView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor).isActive = true
+    tableView.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
   }
 
-  override func observeValue(
-      forKeyPath keyPath: String?,
-      of object: Any?,
-      change: [NSKeyValueChangeKey: Any]?,
-      context: UnsafeMutableRawPointer?
-  ) {
-    if (object as? UITableView) === tableView && keyPath == "contentSize" {
+  override func updateConstraints() {
+    super.updateConstraints()
 
+    NSLayoutConstraint.deactivate(dynamicConstraints)
+    if let header = header {
+      dynamicConstraints = [
+        tableView.topAnchor.constraint(equalTo: header.bottomAnchor),
+        header.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+        header.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+        header.topAnchor.constraint(equalTo: containerView.topAnchor),
+
+        headerSeparator.heightAnchor.constraint(equalToConstant: 1 / UIScreen.main.scale),
+        headerSeparator.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+        headerSeparator.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+        headerSeparator.topAnchor.constraint(equalTo: header.bottomAnchor),
+      ]
     } else {
-      super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
+      dynamicConstraints = [tableView.topAnchor.constraint(equalTo: containerView.topAnchor)]
     }
+
+    NSLayoutConstraint.activate(dynamicConstraints)
   }
 
   func addAction(_ action: TLActionSheetAction) {
