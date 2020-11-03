@@ -15,7 +15,7 @@ This replacement aims to solve all of those issues, whilst maintain the same loo
 - [x] Landscape/portrait orientations.
 - [x] Dimmed background presentation controller.
 - [x] Custom presentation/dismissal animations.
-- [ ] Feature parity with UIAlertController's action sheet style.
+- [x] Feature parity with UIAlertController's action sheet style.
 - [x] Scrolling.
 - [x] Portrait/landscape.
 - [ ] Customise action labels.

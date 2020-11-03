@@ -108,13 +108,6 @@ private class TLActionGroupViewCell: UITableViewCell, TLScrubInteraction {
     contentView.addSubview(actionView)
   }
 
-  override func prepareForReuse() {
-    super.prepareForReuse()
-
-//    actionViewBottomConstraint.isActive = false
-//    separatorView.isHidden = false
-  }
-
   func scrubbingMoved(_ touch: UITouch, with event: UIEvent?) {
     if point(inside: touch.location(in: self), with: event) {
       actionView.setHighlighted(true, impact: true)
@@ -157,6 +150,7 @@ internal class TLActionGroupView: UIView, UITableViewDataSource, UITableViewDele
     }
   }
 
+  @objc internal dynamic var scrollingEnabled = false
   internal var hasActions: Bool {
     get {
       !actions.isEmpty
@@ -190,6 +184,8 @@ internal class TLActionGroupView: UIView, UITableViewDataSource, UITableViewDele
       let scrollingEnabled = responder.contentSize.height > responder.bounds.height
       self.isUserInteractionEnabled = scrollingEnabled
       tableView.showsVerticalScrollIndicator = scrollingEnabled
+
+      self.scrollingEnabled = scrollingEnabled
     }
 
     return tableView
@@ -239,11 +235,8 @@ internal class TLActionGroupView: UIView, UITableViewDataSource, UITableViewDele
       tableView.removeFromSuperview()
     }
 
-    print(containerView.superview)
     dynamicConstraints.append(contentsOf: updateTableConstraints(hasHeader: hasHeader))
     dynamicConstraints.append(contentsOf: updateHeaderConstraints(hasTableView: hasTableView))
-
-    print(dynamicConstraints!)
 
     NSLayoutConstraint.activate(dynamicConstraints)
 

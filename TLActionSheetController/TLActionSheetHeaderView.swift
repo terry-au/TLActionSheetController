@@ -7,13 +7,16 @@ import UIKit
 
 class TLActionSheetHeaderView: UIView {
   private static let padding: CGFloat = 14.666
-  private static let interLabelSpacing: CGFloat = 12.333
+  private static let compressedPadding: CGFloat = 5.333
   private static let extendedPadding: CGFloat = 24.666
+  private static let interLabelSpacing: CGFloat = 12.333
 
   private let titleLabel = UILabel()
   private let messageLabel = UILabel()
   private let stackView = UIStackView()
+  private var compressedVerticalLayoutModeEnabled = false
 
+  internal var topConstraint: NSLayoutConstraint?
   internal var bottomConstraint: NSLayoutConstraint?
 
   lazy var visualEffectView: UIView = {
@@ -64,7 +67,7 @@ class TLActionSheetHeaderView: UIView {
     titleLabel.translatesAutoresizingMaskIntoConstraints = false
     messageLabel.translatesAutoresizingMaskIntoConstraints = false
 
-    visualEffectView.topAnchor.constraint(equalTo: topAnchor, constant: TLActionSheetHeaderView.padding).isActive = true
+    topConstraint = visualEffectView.topAnchor.constraint(equalTo: topAnchor, constant: TLActionSheetHeaderView.padding)
     visualEffectView.leftAnchor.constraint(equalTo: leftAnchor, constant: TLActionSheetHeaderView.padding).isActive = true
     visualEffectView.rightAnchor.constraint(
         equalTo: rightAnchor,
@@ -74,6 +77,7 @@ class TLActionSheetHeaderView: UIView {
         equalTo: bottomAnchor,
         constant: -TLActionSheetHeaderView.padding
     )
+    topConstraint?.isActive = true
     bottomConstraint?.isActive = true
 
     stackView.topAnchor.constraint(equalTo: visualEffectView.topAnchor).isActive = true
@@ -90,6 +94,24 @@ class TLActionSheetHeaderView: UIView {
 
   func setHasActionViewsBelow(_ hasViewBelow: Bool) {
     bottomConstraint?.constant = hasViewBelow ? -TLActionSheetHeaderView.extendedPadding : -TLActionSheetHeaderView.padding
+    setNeedsUpdateConstraints()
+  }
+
+  func setCompressedVerticalLayoutModeEnabled(_ enabled: Bool) {
+    guard enabled != self.compressedVerticalLayoutModeEnabled else {
+      return
+    }
+
+    compressedVerticalLayoutModeEnabled = enabled
+
+    if compressedVerticalLayoutModeEnabled {
+      topConstraint?.constant = TLActionSheetHeaderView.compressedPadding
+      stackView.spacing = 0
+    } else {
+      topConstraint?.constant = TLActionSheetHeaderView.padding
+      stackView.spacing = TLActionSheetHeaderView.interLabelSpacing
+    }
+
     setNeedsUpdateConstraints()
   }
 

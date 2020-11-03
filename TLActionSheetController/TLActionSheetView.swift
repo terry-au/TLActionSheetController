@@ -22,8 +22,16 @@ internal class TLActionSheetView: UIView {
 
   private var cancelActionView: TLCancelActionView?
   private var actions: [TLActionSheetAction] = []
+  private var actionGroupViewScrollingObserver: NSKeyValueObservation!
   private lazy var actionGroupView: TLActionGroupView! = {
     let actionGroupView = TLActionGroupView()
+
+    actionGroupViewScrollingObserver = actionGroupView.observe(\.scrollingEnabled) { [unowned self] responder, change in
+      /* If table is scrollable, compress layout to preserve vertical space. */
+      if let header = self.actionGroupView.header as? TLActionSheetHeaderView {
+        header.setCompressedVerticalLayoutModeEnabled(responder.scrollingEnabled)
+      }
+    }
 
     return actionGroupView
   }()
