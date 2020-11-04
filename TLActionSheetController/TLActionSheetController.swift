@@ -113,7 +113,7 @@ class TLActionSheetController: UIViewController, UIViewControllerTransitioningDe
   func updateContentWidthAnchors(`for` traitCollection: UITraitCollection) {
     if traitCollection.horizontalSizeClass == .compact && traitCollection.verticalSizeClass == .compact {
       landscapeWidthAnchor.isActive = true
-      topAnchor.constant = 0
+      topAnchor.constant = 8
     } else {
       landscapeWidthAnchor.isActive = false
       topAnchor.constant = TLActionSheetController.kTopAnchorOffset
