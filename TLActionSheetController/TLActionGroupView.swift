@@ -183,7 +183,7 @@ internal class TLActionGroupView: UIView, UITableViewDataSource, UITableViewDele
     tableView.delegate = self
     tableView.alwaysBounceVertical = false
     tableView.backgroundColor = nil
-    tableView.rowHeight = 57
+    tableView.rowHeight = 57 + (1 / UIScreen.main.scale)
     tableView.separatorStyle = .none
     tableView.register(TLActionGroupViewCell.self, forCellReuseIdentifier: TLActionGroupView.kActionCellIdentifier)
 

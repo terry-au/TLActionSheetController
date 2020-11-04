@@ -68,7 +68,7 @@ private class TLDimmedPresentationController: UIPresentationController, UIViewCo
 }
 
 private class TLTransitionAnimator: NSObject, UIViewControllerAnimatedTransitioning {
-  let presenting: Bool
+  private let presenting: Bool
 
   init(presenting: Bool) {
     self.presenting = presenting
@@ -100,11 +100,15 @@ private class TLTransitionAnimator: NSObject, UIViewControllerAnimatedTransition
     let offset = containerView.safeAreaInsets.bottom
 
     if presenting {
+      fromViewController.view.tintAdjustmentMode = .dimmed
+
       toViewController.view.transform = CGAffineTransform(
           translationX: 0,
           y: actionController.contentView.frame.height + offset
       )
       containerView.addSubview(toViewController.view)
+    } else {
+      toViewController.view.tintAdjustmentMode = .automatic
     }
 
     UIView.animate(
@@ -131,6 +135,9 @@ private class TLTransitionAnimator: NSObject, UIViewControllerAnimatedTransition
 }
 
 final class TLDimmedModalTransitioningDelegate: NSObject, UIViewControllerTransitioningDelegate {
+  private let presentationAnimator = TLTransitionAnimator(presenting: true)
+  private let dismissalAnimator = TLTransitionAnimator(presenting: false)
+
   func presentationController(
       forPresented presented: UIViewController,
       presenting: UIViewController?,
@@ -144,10 +151,10 @@ final class TLDimmedModalTransitioningDelegate: NSObject, UIViewControllerTransi
       presenting: UIViewController,
       source: UIViewController
   ) -> UIViewControllerAnimatedTransitioning? {
-    TLTransitionAnimator(presenting: true)
+    presentationAnimator
   }
 
   func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-    TLTransitionAnimator(presenting: false)
+    dismissalAnimator
   }
 }
