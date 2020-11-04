@@ -11,7 +11,15 @@ class TLActionSheetController: UIViewController, UIViewControllerTransitioningDe
   private var cancelAction: TLActionSheetAction?
   private var landscapeWidthAnchor: NSLayoutConstraint!
   private var topAnchor: NSLayoutConstraint!
-  public var header: TLActionSheetHeaderView?
+  public var header: UIView? {
+    get {
+      actionView.header
+    }
+
+    set {
+      actionView.header = newValue
+    }
+  }
 
   lazy var contentView: UIView! = {
     actionView
@@ -66,8 +74,7 @@ class TLActionSheetController: UIViewController, UIViewControllerTransitioningDe
     }()
 
     let header = TLActionSheetHeaderView(title: titleAttributedString, message: messageAttributedString)
-    header.translatesAutoresizingMaskIntoConstraints = false
-    actionView.setHeader(header)
+    actionView.header = header
   }
 
   required init?(coder: NSCoder) {

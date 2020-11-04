@@ -47,9 +47,21 @@ final class ContentSizedTableView: UITableView {
   }
 }
 
-private class TLActionGroupViewCell: UITableViewCell, TLScrubInteraction {
+private class TLActionGroupViewCell: UITableViewCell, TLScrubbable {
   private var actionViewBottomConstraint: NSLayoutConstraint!
   private var separatorViewBottomConstraint: NSLayoutConstraint!
+
+  var action: TLActionSheetAction {
+    get {
+      actionView.action
+    }
+
+    set {
+      actionView.action = newValue
+      actionView.translatesAutoresizingMaskIntoConstraints = false
+      contentView.addSubview(actionView)
+    }
+  }
 
   private lazy var actionView: TLActionView! = {
     let actionView = TLActionView()
@@ -102,14 +114,9 @@ private class TLActionGroupViewCell: UITableViewCell, TLScrubInteraction {
     backgroundColor = nil
   }
 
-  func setAction(action: TLActionSheetAction) {
-    actionView.action = action
-    actionView.translatesAutoresizingMaskIntoConstraints = false
-    contentView.addSubview(actionView)
-  }
-
-  func scrubbingMoved(_ touch: UITouch, with event: UIEvent?) {
-    if point(inside: touch.location(in: self), with: event) {
+  func scrubbingMoved(_ touch: UITouch, with event: UIEvent?, container: UIView) {
+    if point(inside: touch.location(in: self), with: event)
+           && container.point(inside: touch.location(in: container), with: event) {
       actionView.setHighlighted(true, impact: true)
     } else {
       actionView.setHighlighted(false)
@@ -130,7 +137,7 @@ private class TLActionGroupViewCell: UITableViewCell, TLScrubInteraction {
   }
 }
 
-internal class TLActionGroupView: UIView, UITableViewDataSource, UITableViewDelegate, TLScrubInteraction {
+internal class TLActionGroupView: UIView, UITableViewDataSource, UITableViewDelegate, TLScrubbable {
 
   private static let kActionCellIdentifier = "ActionCell"
 
@@ -142,6 +149,7 @@ internal class TLActionGroupView: UIView, UITableViewDataSource, UITableViewDele
       }
 
       if let header = header {
+        header.translatesAutoresizingMaskIntoConstraints = false
         containerView.contentView.addSubview(header)
         containerView.contentView.addSubview(headerSeparator)
       }
@@ -310,13 +318,13 @@ internal class TLActionGroupView: UIView, UITableViewDataSource, UITableViewDele
     }
 
     let action = actions[indexPath.row]
-    cell.setAction(action: action)
+    cell.action = action
     cell.isSeparatorHidden = indexPath.row == actions.count - 1
 
     return cell
   }
 
-  func scrubbingMoved(_ touch: UITouch, with event: UIEvent?) {
+  func scrubbingMoved(_ touch: UITouch, with event: UIEvent?, container: UIView) {
     guard let indexPathsForVisibleRows = tableView.indexPathsForVisibleRows else {
       return
     }
@@ -326,7 +334,7 @@ internal class TLActionGroupView: UIView, UITableViewDataSource, UITableViewDele
         continue
       }
 
-      cell.scrubbingMoved(touch, with: event)
+      cell.scrubbingMoved(touch, with: event, container: container)
     }
   }
 

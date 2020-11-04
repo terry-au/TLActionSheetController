@@ -20,7 +20,7 @@ This replacement aims to solve all of those issues, whilst maintain the same loo
 - [x] Portrait/landscape.
 - [ ] Customise action labels.
 - [ ] Icon support.
-- [ ] Custom header API.
+- [x] Custom header API.
 - [ ] Popover presentation support.
 - [ ] Support high contrast mode.
 - [ ] Support bold text mode.

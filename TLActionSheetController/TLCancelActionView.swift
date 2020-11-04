@@ -5,7 +5,7 @@
 import Foundation
 import UIKit
 
-internal class TLCancelActionView: UIView, TLScrubInteraction {
+internal class TLCancelActionView: UIView, TLScrubbable {
   let action: TLActionSheetAction
 
   private let actionView: TLActionView
@@ -30,7 +30,7 @@ internal class TLCancelActionView: UIView, TLScrubInteraction {
     actionView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
   }
 
-  func scrubbingMoved(_ touch: UITouch, with event: UIEvent?) {
+  func scrubbingMoved(_ touch: UITouch, with event: UIEvent?, container: UIView) {
     if point(inside: touch.location(in: self), with: event) {
       actionView.setHighlighted(true, impact: true)
     } else {

@@ -19,6 +19,15 @@ internal class TLActionSheetView: UIView {
       cancelActionView?.isUserInteractionEnabled = false
     }
   }
+  internal var header: UIView? {
+    get {
+      actionGroupView.header
+    }
+
+    set {
+      actionGroupView.header = newValue
+    }
+  }
 
   private var cancelActionView: TLCancelActionView?
   private var actions: [TLActionSheetAction] = []
@@ -58,11 +67,11 @@ internal class TLActionSheetView: UIView {
   }
 
   internal func prepareForDisplay() {
-    if let header = actionGroupView.header as? TLActionSheetHeaderView {
+    if let header = header as? TLActionSheetHeaderView {
       header.setHasActionViewsBelow(actionGroupView.hasActions)
     }
 
-    if actionGroupView.hasActions || actionGroupView.header != nil {
+    if actionGroupView.hasActions || header != nil {
       groupStack.addArrangedSubview(actionGroupView)
       actionGroupView.translatesAutoresizingMaskIntoConstraints = false
       actionGroupView.leadingAnchor.constraint(equalTo: groupStack.leadingAnchor).isActive = true
@@ -83,14 +92,13 @@ internal class TLActionSheetView: UIView {
     actionGroupView.addAction(action)
   }
 
-  func setHeader(_ header: UIView?) {
-    actionGroupView.header = header
-  }
-
   override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
     if let touch = touches.randomElement() {
-      actionGroupView?.scrubbingMoved(touch, with: event)
-      cancelActionView?.scrubbingMoved(touch, with: event)
+      actionGroupView.scrubbingMoved(touch, with: event, container: actionGroupView)
+
+      if let cancelActionView = cancelActionView {
+        cancelActionView.scrubbingMoved(touch, with: event, container: cancelActionView)
+      }
     }
   }
 
