@@ -14,7 +14,7 @@ public class TLActionSheetAction {
     case destructive = 2
   }
 
-  open var title: String?
+  open var title: String
   open var isEnabled: Bool
   open var style: Style
 
@@ -23,7 +23,7 @@ public class TLActionSheetAction {
   internal var sideEffect: (() -> Void)?
 
   init(title: String?, style: TLActionSheetAction.Style, handler: ((TLActionSheetAction) -> Void)? = nil) {
-    self.title = title
+    self.title = title ?? ""
     self.handler = handler
     self.style = style
     isEnabled = true

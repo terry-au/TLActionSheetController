@@ -7,6 +7,7 @@ import UIKit
 
 internal class TLActionView: UIControl {
   private static let selectionFeedbackGenerator = UISelectionFeedbackGenerator()
+
   private static let cancelBackgroundColour = UIColor.themed { collection in
     if collection {
       return UIColor(red: 0.173, green: 0.173, blue: 0.180, alpha: 1)
@@ -28,6 +29,14 @@ internal class TLActionView: UIControl {
 
     return UIColor(red: 1, green: 0.231, blue: 0.188, alpha: 1)
   }
+  private static var paragraphStyle: NSParagraphStyle! = {
+    let paragraphStyle = NSMutableParagraphStyle()
+    paragraphStyle.alignment = .center
+    paragraphStyle.hyphenationFactor = 0.4
+    paragraphStyle.lineBreakMode = .byTruncatingMiddle
+
+    return paragraphStyle
+  }()
 
   var action: TLActionSheetAction! {
     didSet {
@@ -43,8 +52,15 @@ internal class TLActionView: UIControl {
       }
 
       label.font = (action.style == .cancel) ? .systemFont(ofSize: 20, weight: .semibold) : .systemFont(ofSize: 20)
-      label.text = action.title
-      label.textColor = (action.style == .destructive) ? TLActionView.destructiveLabelColour : TLActionView.labelColour
+      let textColor = (action.style == .destructive) ? TLActionView.destructiveLabelColour : TLActionView.labelColour
+
+      label.attributedText = NSAttributedString(
+          string: action.title,
+          attributes: [
+            .foregroundColor: textColor,
+            .paragraphStyle: TLActionView.paragraphStyle
+          ]
+      )
     }
   }
 
