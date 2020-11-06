@@ -183,7 +183,6 @@ internal class TLActionGroupView: UIView, UITableViewDataSource, UITableViewDele
     tableView.delegate = self
     tableView.alwaysBounceVertical = false
     tableView.backgroundColor = nil
-    tableView.rowHeight = 57 + (1 / UIScreen.main.scale)
     tableView.separatorStyle = .none
     tableView.register(TLActionGroupViewCell.self, forCellReuseIdentifier: TLActionGroupView.kActionCellIdentifier)
 
@@ -214,8 +213,15 @@ internal class TLActionGroupView: UIView, UITableViewDataSource, UITableViewDele
   override init(frame: CGRect) {
     super.init(frame: frame)
 
-    layer.cornerRadius = 13
     clipsToBounds = true
+    layer.maskedCorners = CACornerMask.init(rawValue: UIRectCorner.allCorners.rawValue)
+
+    containerView.clipsToBounds = true
+    containerView.layer.cornerRadius = 13
+    containerView.layer.maskedCorners = CACornerMask.init(rawValue: UIRectCorner.allCorners.rawValue)
+    if #available(iOS 13.0, *) {
+      containerView.layer.cornerCurve = .continuous
+    }
 
     headerSeparator.translatesAutoresizingMaskIntoConstraints = false
 
@@ -307,6 +313,15 @@ internal class TLActionGroupView: UIView, UITableViewDataSource, UITableViewDele
 
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     actions.count
+  }
+
+  func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    var height: CGFloat = 57
+    if indexPath.row != actions.count - 1 {
+      height += (1 / UIScreen.main.scale)
+    }
+
+    return height
   }
 
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
