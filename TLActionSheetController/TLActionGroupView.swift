@@ -189,7 +189,7 @@ internal class TLActionGroupView: UIView, UITableViewDataSource, UITableViewDele
     tableContentSizeObserver = tableView.observe(\.contentSize) { [unowned self] responder, change in
       /* If table is scrollable, enable user interaction and show scrollbars. */
       let scrollingEnabled = responder.contentSize.height > responder.bounds.height
-      self.isUserInteractionEnabled = scrollingEnabled
+      tableView.isUserInteractionEnabled = scrollingEnabled
       tableView.showsVerticalScrollIndicator = scrollingEnabled
 
       self.scrollingEnabled = scrollingEnabled
