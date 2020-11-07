@@ -329,7 +329,7 @@ internal class TLActionGroupView: UIView, UITableViewDataSource, UITableViewDele
         withIdentifier: TLActionGroupView.kActionCellIdentifier,
         for: indexPath
     ) as? TLActionGroupViewCell else {
-      fatalError("invalid cell returned in TLACtionGroupView")
+      fatalError("invalid cell returned in TLActionGroupView")
     }
 
     let action = actions[indexPath.row]
