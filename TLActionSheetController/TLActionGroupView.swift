@@ -214,11 +214,9 @@ internal class TLActionGroupView: UIView, UITableViewDataSource, UITableViewDele
     super.init(frame: frame)
 
     clipsToBounds = true
-    layer.maskedCorners = CACornerMask.init(rawValue: UIRectCorner.allCorners.rawValue)
 
     containerView.clipsToBounds = true
     containerView.layer.cornerRadius = 13
-    containerView.layer.maskedCorners = CACornerMask.init(rawValue: UIRectCorner.allCorners.rawValue)
     if #available(iOS 13.0, *) {
       containerView.layer.cornerCurve = .continuous
     }
