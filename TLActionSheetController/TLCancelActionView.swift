@@ -19,15 +19,19 @@ internal class TLCancelActionView: UIView, TLScrubbable {
     actionView = TLActionView(action: action)
     super.init(frame: CGRect.zero)
 
-    layer.cornerRadius = 13
-    clipsToBounds = true
-
     actionView.translatesAutoresizingMaskIntoConstraints = false
     addSubview(actionView)
     actionView.topAnchor.constraint(equalTo: topAnchor).isActive = true
     actionView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
     actionView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
     actionView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+
+    layer.cornerRadius = 13
+    clipsToBounds = true
+
+    if #available(iOS 13.0, *) {
+      layer.cornerCurve = .continuous
+    }
   }
 
   func scrubbingMoved(_ touch: UITouch, with event: UIEvent?, container: UIView) {
