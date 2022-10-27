@@ -7,12 +7,17 @@ import UIKit
 
 
 private class TLActionSeparatorView: UIView {
+  private var visualEffectViewLazyValue: UIVisualEffectView?
   @available(iOS 13.0, *)
-  private lazy var visualEffectView: UIVisualEffectView = {
+  private var visualEffectView: UIVisualEffectView {
+    if let visualEffectViewLazyValue = visualEffectViewLazyValue {
+      return visualEffectViewLazyValue
+    }
     let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.actionSheetStyle)
     let vibrancyEffect = UIVibrancyEffect(blurEffect: blurEffect, style: .separator)
-    return UIVisualEffectView(effect: vibrancyEffect)
-  }()
+    visualEffectViewLazyValue = UIVisualEffectView(effect: vibrancyEffect)
+    return visualEffectViewLazyValue!
+  }
 
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
@@ -170,11 +175,16 @@ internal class TLActionGroupView: UIView, UITableViewDataSource, UITableViewDele
   private let headerSeparator = TLActionSeparatorView()
   private var dynamicConstraints: [NSLayoutConstraint]! = []
 
+  private var separatorEffectLazyValue: UIVisualEffect?
   @available(iOS 13.0, *)
-  private lazy var separatorEffect: UIVisualEffect = {
+  private var separatorEffect: UIVisualEffect {
+    if let separatorEffectLazyValue = separatorEffectLazyValue {
+      return separatorEffectLazyValue
+    }
     let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.actionSheetStyle)
-    return UIVibrancyEffect(blurEffect: blurEffect, style: .separator)
-  }()
+    separatorEffectLazyValue = UIVibrancyEffect(blurEffect: blurEffect, style: .separator)
+    return separatorEffectLazyValue!
+  }
 
   private lazy var tableView: UITableView = {
     let tableView = ContentSizedTableView(frame: .zero)
