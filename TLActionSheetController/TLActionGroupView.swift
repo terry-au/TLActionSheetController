@@ -11,12 +11,12 @@ private class TLActionSeparatorView: UIView {
   @available(iOS 13.0, *)
   private var visualEffectView: UIVisualEffectView {
     if let visualEffectViewLazyValue = visualEffectViewLazyValue {
-	  return visualEffectViewLazyValue
-	}
+      return visualEffectViewLazyValue
+    }
     let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.actionSheetStyle)
     let vibrancyEffect = UIVibrancyEffect(blurEffect: blurEffect, style: .separator)
-	visualEffectViewLazyValue = UIVisualEffectView(effect: vibrancyEffect)
-	return visualEffectViewLazyValue!
+    visualEffectViewLazyValue = UIVisualEffectView(effect: vibrancyEffect)
+    return visualEffectViewLazyValue!
   }
 
   required init?(coder: NSCoder) {
@@ -179,11 +179,11 @@ internal class TLActionGroupView: UIView, UITableViewDataSource, UITableViewDele
   @available(iOS 13.0, *)
   private var separatorEffect: UIVisualEffect {
     if let separatorEffectLazyValue = separatorEffectLazyValue {
-	  return separatorEffectLazyValue
-	}
-	let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.actionSheetStyle)
-	separatorEffectLazyValue = UIVibrancyEffect(blurEffect: blurEffect, style: .separator)
-	return separatorEffectLazyValue!
+      return separatorEffectLazyValue
+    }
+    let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.actionSheetStyle)
+    separatorEffectLazyValue = UIVibrancyEffect(blurEffect: blurEffect, style: .separator)
+    return separatorEffectLazyValue!
   }
 
   private lazy var tableView: UITableView = {
